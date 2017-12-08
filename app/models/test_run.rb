@@ -1,0 +1,2 @@
+class TestRun < ApplicationRecord
+end

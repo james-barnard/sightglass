@@ -1,0 +1,2 @@
+class ComponentState < ApplicationRecord
+end

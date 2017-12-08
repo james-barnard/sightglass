@@ -1,0 +1,2 @@
+class StepStatus < ApplicationRecord
+end
