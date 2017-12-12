@@ -15,8 +15,8 @@ class TestRunInfo extends Component {
   };
   
   componentDidMount() {
-    console.log("Component Mounted")
-    this.getInfo(1)
+    console.log("Test Run Mounted")
+    this.getInfo('test_runs/1')
   };
 
   render() {

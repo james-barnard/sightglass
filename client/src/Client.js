@@ -1,7 +1,7 @@
 /* eslint-disable no-undef */
 function search(resource, cb) {
-  console.log(resource)
-  return fetch(resource, {
+  console.log(`Client:search ${resource}`);
+  return fetch('api/' + resource, {
     accept: 'application/json',
   }).then(checkStatus)
     .then(parseJSON)
@@ -9,7 +9,6 @@ function search(resource, cb) {
 }
 
 function checkStatus(response) {
-  console.log("check status")
   if (response.status >= 200 && response.status < 300) {
     return response;
   }

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import TestRunInfo from './test_run_info.js'
+import ComponentList from './component_list.js'
 
 class App extends Component {
   render() {
@@ -11,6 +12,7 @@ class App extends Component {
           <h1 className="App-title">Welcome to Nitrobrew - Sightglass</h1>
         </header>
         <TestRunInfo />
+        <ComponentList />
       </div>
     );
   }
