@@ -21,7 +21,7 @@ class ComponentList extends Component {
 
   render() {
     const componentList = this.state.components.map((component) => (
-      <ul>
+      <ul key={component.id}>
         <li>Id: {component.id}</li>
         <li>Name: {component.name}</li>
         <li>Desired State: (open or closed)</li>
