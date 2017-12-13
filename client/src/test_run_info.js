@@ -16,7 +16,7 @@ class TestRunInfo extends Component {
   
   componentDidMount() {
     console.log("Test Run Mounted")
-    this.getInfo('test_runs/1')
+    this.getInfo('test_runs/26')
   };
 
   render() {

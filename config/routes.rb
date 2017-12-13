@@ -7,6 +7,10 @@ Rails.application.routes.draw do
 
   get 'api/components', to: 'component#index'
 
+  get 'api/program_info/:id', to: 'test_run#program_info'
+
+  get 'api/step_statuses/:id', to: 'test_run#step_statuses'
+
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 
 end
