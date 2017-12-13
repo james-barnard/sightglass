@@ -1,6 +1,7 @@
 class TestRun < ApplicationRecord
   belongs_to :program
-  has_many :step_statuses
+  has_many :steps, through: :step_statuses
+  has_many :step_statuses, -> {includes :step }
 
   def program_info
     {
