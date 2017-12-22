@@ -1,7 +1,7 @@
 class TestRun < ApplicationRecord
   belongs_to :program
-  has_many :steps, through: :step_statuses
   has_many :step_statuses, -> {includes :step }
+  has_many :steps, through: :step_statuses
 
   def program_info
     {
@@ -11,6 +11,11 @@ class TestRun < ApplicationRecord
       current_step: current_step,
       status: status
     }
+  end
+
+  def timeline
+    @timeline = step_statuses.includes(:step)
+
   end
 
   def run_time

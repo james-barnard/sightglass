@@ -23,10 +23,24 @@ FactoryBot.define do
   end
 
   factory :step do
-    sequence(:id) { |n| n }
+    id 1
     program
     description "step description"
     duration 1
     sequence(:sequence_number) { |n| n }
+  end
+
+  factory :component do
+    sequence(:id) { |n| n }
+    test_cell_id 1
+    name "Component Name"
+  end
+
+  factory :component_state do
+    sequence(:id) { |n| n }
+    step
+    component
+    state "open"
+    sequence_number 1
   end
 end

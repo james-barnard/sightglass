@@ -24,7 +24,7 @@ describe TestRunController do
   end
 
   it "knows its step status info" do
-    get :step_statuses, :format => :JSON, :params => {:id => 1}
+    get :timeline, :format => :JSON, :params => {:id => 1}
     expect(JSON.parse(response.body).first.keys.sort).to eq (TIMELINE_KEYS.sort)
   end
 end

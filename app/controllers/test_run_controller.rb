@@ -12,8 +12,8 @@ class TestRunController < ApplicationController
     render json: @test_run.program_info
   end
 
-  def step_statuses
+  def timeline
     @test_run = TestRun.find(params[:id])
-    render json: @test_run.step_statuses
+    render json: @test_run.timeline
   end
 end

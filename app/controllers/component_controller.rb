@@ -8,4 +8,9 @@ class ComponentController < ApplicationController
     @component = Component.find(params[:id])
     render json: @component
   end
+
+  def component_states
+    render json: Component.step_states(params[:id])
+  end
+
 end
