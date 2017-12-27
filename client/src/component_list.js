@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import Client from './Client';
+import { Table } from 'semantic-ui-react'
 
 class ComponentList extends Component {
   state = {
     components: []
   };
 
-  getInfo = (resource) => {
+  getComponentInfo = (resource) => {
     Client.search(resource, (components) => {
       this.setState({
         components: components
@@ -16,22 +17,33 @@ class ComponentList extends Component {
 
   componentDidMount() {
     console.log("ComponentsList Mounted")
-    this.getInfo("components")
+    this.getComponentInfo("step/2/component_states")
   };
 
   render() {
     const componentList = this.state.components.map((component) => (
-      <ul key={component.id}>
-        <li>Id: {component.id}</li>
-        <li>Name: {component.name}</li>
-        <li>Desired State: (open or closed)</li>
-      </ul>
+      <Table.Row key={component.id}>
+        <Table.Cell>{component.id}</Table.Cell>
+        <Table.Cell>{component.name}</Table.Cell>
+        <Table.Cell>{component.state}</Table.Cell>
+      </Table.Row>
     ));
 
     return(
       <div>
-        <h1>This is the Component List</h1>
-          {componentList}
+        <h3>Component List</h3>
+        <Table compact>
+          <Table.Header>
+            <Table.Row>
+              <Table.HeaderCell>ID</Table.HeaderCell>
+              <Table.HeaderCell>Name</Table.HeaderCell>
+              <Table.HeaderCell>Desired State</Table.HeaderCell>
+            </Table.Row>
+          </Table.Header>
+          <Table.Body>
+            {componentList}
+          </Table.Body>
+        </Table>
       </div>
     );
   }

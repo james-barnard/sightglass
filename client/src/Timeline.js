@@ -1,9 +1,14 @@
 import React, { Component } from 'react';
 import Client from './Client';
+import { Menu, Label } from 'semantic-ui-react'
 
 class Timeline extends Component {
-  state = {
-    step_statuses: []
+  constructor(props) {
+    super(props);
+    this.state = {
+      step_statuses: [],
+      activeItem: ""
+    }
   };
 
   getInfo = (resource) => {
@@ -16,22 +21,34 @@ class Timeline extends Component {
 
   componentDidMount() {
     console.log("Timeline Mounted")
-    this.getInfo("step_statuses/26")
+    this.getInfo("timeline/26")
+  };
+
+  handleItemClick = (e, { name }) => {
+    this.setState({ activeItem: name });
+    console.log( "activeItem is  " + this.state.activeItem )
   };
 
   render() {
-    const Timeline = this.state.step_statuses.map((step_status) => (
-      <ul key={step_status.id}>
-        <li>Step Id: {step_status.step_id}</li>
-        <li>Name: Step Status Name</li>
-        <li>Status: {step_status.status}</li>
-      </ul>
+    const { step_statuses, activeItem } = this.state
+    const TimelineItems = step_statuses.map((step_status) => (
+      <Menu.Item
+        key = {step_status.id}
+        name = {step_status.id.toString()}
+        active={activeItem === step_status.id.toString()}
+        onClick={this.handleItemClick}
+      >
+      <Label floating>{step_status.step_id}</Label>
+        {step_status.status}
+      </Menu.Item>
     ));
 
     return(
       <div>
-        <h1>This is the Timeline</h1>
-          {Timeline}
+        <h3>Timeline</h3>
+        <Menu>
+          {TimelineItems}
+        </Menu>
       </div>
     );
   }
