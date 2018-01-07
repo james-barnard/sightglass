@@ -1,6 +1,6 @@
 /* eslint-disable no-undef */
 function search(resource, cb) {
-  console.log(`Client:search ${resource}`);
+  console.log(`Client:search - api/${resource}`);
   return fetch('api/' + resource, {
     accept: 'application/json',
   }).then(checkStatus)

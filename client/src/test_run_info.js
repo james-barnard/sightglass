@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
 import Client from './Client';
-import { List } from 'semantic-ui-react'
+import { Table } from 'semantic-ui-react'
 
 
 class TestRunInfo extends Component {
-  state = {
-    test_run: "test data"
+  constructor(props) {
+    super(props);
+    this.state = {
+      test_run: "test data"
+    }
   };
   
   getInfo = (id) => {
@@ -16,35 +19,48 @@ class TestRunInfo extends Component {
     });
   };
   
+  componentWillReceiveProps(nextProps) {
+    if (this.props.testRunId !== nextProps.testRunId) { 
+      nextProps.testRunId && this.getInfo(`test_run/${nextProps.testRunId}`)
+    }
+  }
+
   componentDidMount() {
     console.log("Test Run Mounted" )
-    this.getInfo('test_run/26')
   };
 
   render() {
     const testRunInfo = (test_run) => {
       if (test_run !== undefined) {
         return(
-          <List celled>
-            <List.Item>
-              <List.Content>Id: {test_run.id}</List.Content>
-            </List.Item>
-            <List.Item>
-              <List.Content>Name: {test_run.name}</List.Content>
-            </List.Item>
-            <List.Item>
-              <List.Content>Program Id: {test_run.program_id}</List.Content>
-            </List.Item>
-            <List.Item>
-              <List.Content>Started At: {test_run.started_at}</List.Content>
-            </List.Item>
-            <List.Item>
-              <List.Content>Completed At: {test_run.completed_at}</List.Content>
-            </List.Item>
-            <List.Item>
-              <List.Content>Final Status: {test_run.status_final}</List.Content>
-            </List.Item>
-          </List>
+          <Table compact>
+            <Table.Body>
+              <Table.Row>
+                <Table.Cell textAlign='right'>Id:</Table.Cell>
+                <Table.Cell>{test_run.id}</Table.Cell>
+              </Table.Row>
+              <Table.Row>
+                <Table.Cell textAlign='right'>Name:</Table.Cell>
+                <Table.Cell>{test_run.name}</Table.Cell>
+              </Table.Row>
+              <Table.Row>
+                <Table.Cell textAlign='right'>Program Id:</Table.Cell>
+                <Table.Cell>{test_run.program_id}</Table.Cell>
+              </Table.Row>
+              <Table.Row>
+                <Table.Cell textAlign='right'>Started At:</Table.Cell>
+                <Table.Cell>{test_run.started_at}</Table.Cell>
+              </Table.Row>
+              <Table.Row>
+                <Table.Cell textAlign='right'>Completed At:</Table.Cell>
+                <Table.Cell>{test_run.completed_at}</Table.Cell>
+              </Table.Row>
+              <Table.Row>
+                <Table.Cell textAlign='right'>Final Status:</Table.Cell>
+                <Table.Cell>{test_run.status_final}</Table.Cell>
+              </Table.Row>
+            </Table.Body>
+          </Table>
 
         );
       } else {

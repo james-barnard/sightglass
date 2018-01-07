@@ -7,7 +7,6 @@ class Timeline extends Component {
     super(props);
     this.state = {
       step_statuses: [],
-      activeItem: ""
     }
   };
 
@@ -19,23 +18,30 @@ class Timeline extends Component {
     });
   };
 
+  componentWillReceiveProps(nextProps) {
+    if (this.props.testRunId !== nextProps.testRunId) { 
+     nextProps.testRunId && this.getInfo(`timeline/${nextProps.testRunId}`)
+    }
+  }
+
   componentDidMount() {
     console.log("Timeline Mounted")
-    this.getInfo("timeline/26")
   };
 
   handleItemClick = (e, { name }) => {
-    this.setState({ activeItem: name });
-    console.log( "activeItem is  " + this.state.activeItem )
+    const nextSelected = name
+    this.props.handleStepSelect(nextSelected);
+    console.log( "Selected Step Id " + nextSelected )
   };
 
   render() {
-    const { step_statuses, activeItem } = this.state
+    const { step_statuses } = this.state
+    const { selectedStepId } = this.props
     const TimelineItems = step_statuses.map((step_status) => (
       <Menu.Item
         key = {step_status.id}
-        name = {step_status.id.toString()}
-        active={activeItem === step_status.id.toString()}
+        name = {step_status.step_id.toString()}
+        active={selectedStepId === step_status.step_id.toString()}
         onClick={this.handleItemClick}
       >
       <Label floating>{step_status.step_id}</Label>

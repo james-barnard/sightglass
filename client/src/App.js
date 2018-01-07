@@ -1,23 +1,34 @@
+import './App.css';
 import React, { Component } from 'react';
 import { Grid } from 'semantic-ui-react'
-import './App.css';
+import { Image } from 'semantic-ui-react'
 import TestRunInfo from './test_run_info.js'
 import ComponentList from './component_list.js'
 import ProgramInfo from './Program_Info.js'
-import Timeline from './Timeline.js'
-import { Image } from 'semantic-ui-react'
-
+import TestRunDropdown from './TestRunDropdown.js'
+import StepInfo from './StepInfo.js'
+import GoogleChartTest from './googleChartTest.js'
 
 class App extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      testRunId: 26,
-      selectedStepId: 64
+      testRunId: null,
+      selectedStepId: null
     }
-  }
+  };
 
+
+  setStepId = (value) => {
+    console.log(`Set Step Id: ${value}`)
+    this.setState({ selectedStepId: value})
+  };
+
+  setTestRun = (value) => {
+    console.log(`Set Test Run: ${value}`)
+    this.setState({ testRunId: value })
+  };
 
   render() {
     const { testRunId, selectedStepId } = this.state;
@@ -30,8 +41,18 @@ class App extends Component {
         <Grid celled>
           <Grid.Row>
             <Grid.Column width={3}>
-              <TestRunInfo testRunId={testRunId} />
-              <ProgramInfo testRunId={testRunId} />
+              <TestRunDropdown
+                handleTestRunSelect={this.setTestRun}
+                />
+              <TestRunInfo
+                testRunId={testRunId}
+              />
+              <ProgramInfo 
+                testRunId={testRunId}
+              />
+              <StepInfo
+                selectedStepId={selectedStepId}
+              />
             </Grid.Column>
             <Grid.Column width={4}>
               <ComponentList
@@ -40,14 +61,17 @@ class App extends Component {
               />
             </Grid.Column>
             <Grid.Column width={7}>
-              <Image src='https://placekitten.com/250/400' />
+              <Image 
+                src='https://placekitten.com/500/640'
+              />
             </Grid.Column>
           </Grid.Row>
           <Grid.Row>
             <Grid.Column width={13}>
-              <Timeline
+              <GoogleChartTest
                 testRunId={testRunId}
                 selectedStepId={selectedStepId}
+                handleStepSelect={this.setStepId}
               />
             </Grid.Column>
           </Grid.Row>

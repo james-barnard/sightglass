@@ -1,9 +1,17 @@
 import React, { Component } from 'react';
 import Client from './Client';
-import { List } from 'semantic-ui-react'
+import { Table } from 'semantic-ui-react'
 class ProgramInfo extends Component {
-  state = {
-    program_info: "Program Information"
+  constructor(props) {
+    super(props);
+    this.state = {
+      program_info: "---",
+      run_time: "---",
+      program_time: "---",
+      step_count: "---",
+      current_step: "---",
+      status: "---"
+    }
   };
 
   getInfo = (resource) => {
@@ -14,36 +22,50 @@ class ProgramInfo extends Component {
     });
   };
 
+  componentWillReceiveProps(nextProps) {
+    if (this.props.testRunId !== nextProps.testRunId) { 
+      nextProps.testRunId && this.getInfo(`program_info/${nextProps.testRunId}`)
+    }
+  }
+
   componentDidMount() {
     console.log("Program Info Mounted")
-    this.getInfo("program_info/17")
   };
 
   render() {
+    const { testRunId } = this.props
     const info = this.state.program_info
     const ProgramInfo = (
-      <List celled>
-        <List.Item>
-          <List.Content>Run Time: {info.run_time} </List.Content>
-        </List.Item>
-        <List.Item>
-          <List.Content>Program Time: {info.program_time}</List.Content>
-        </List.Item>
-        <List.Item>
-          <List.Content>Step Count: {info.step_count}</List.Content>
-        </List.Item>
-        <List.Item>
-          <List.Content>Current Step: {info.current_step}</List.Content>
-        </List.Item>
-        <List.Item>
-          <List.Content>Status: {info.status}</List.Content>
-        </List.Item>
-      </List>
+      <Table compact>
+        <Table.Body>
+          <Table.Row>
+            <Table.Cell textAlign='right'>Run Time:</Table.Cell>
+            <Table.Cell>{info.run_time}</Table.Cell>
+          </Table.Row>
+          <Table.Row>
+            <Table.Cell textAlign='right'>Program Time:</Table.Cell>
+            <Table.Cell>{info.program_time}</Table.Cell>
+          </Table.Row>
+          <Table.Row>
+            <Table.Cell textAlign='right'>Step Count:</Table.Cell>
+            <Table.Cell>{info.step_count}</Table.Cell>
+          </Table.Row>
+          <Table.Row>
+            <Table.Cell textAlign='right'>Current Step:</Table.Cell>
+            <Table.Cell>{info.current_step}</Table.Cell>
+          </Table.Row>
+          <Table.Row>
+            <Table.Cell textAlign='right'>Status:</Table.Cell>
+            <Table.Cell>{info.status}</Table.Cell>
+          </Table.Row>
+        </Table.Body>
+      </Table>
     );
 
     return(
       <div>
         <h3>Program Info</h3>
+        <h4>Test Run Id: {testRunId}</h4>
           {ProgramInfo}
       </div>
     );
