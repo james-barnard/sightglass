@@ -1,5 +1,6 @@
 class TestRunController < ApplicationController
   def index
+    render json: TestRun.test_run_select_list.all
   end
 
   def show
