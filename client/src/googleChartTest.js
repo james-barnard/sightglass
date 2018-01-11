@@ -6,19 +6,32 @@ class GoogleChartTest extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      step_statuses: []
+      render: false,
+      step_statuses: [["Test Run ID", "Select a test run", 0, 3000, "pretend this is a step_id" ]]
     };
   };
 
+  componentDidMount() {
+    this.setState({
+      render: true
+    })
+  }
+
   getInfo = (resource) => {
     Client.search(resource, (step_statuses) => {
-      step_statuses.forEach(function(step_status) {
-      step_status[2] = new Date(step_status[2]*1000)
-      step_status[3] = new Date(step_status[3]*1000)
-      })
       this.setState({step_statuses: step_statuses})
     });
   };
+
+  passStepId = (step_id) => {
+    this.props.handleStepSelect(step_id);
+    this.removeTooltip();
+  };
+
+  removeTooltip() {
+    const tooltip = document.getElementsByClassName("google-visualization-tooltip").item(0);
+    tooltip.parentNode.removeChild(tooltip);
+  }
 
   componentWillReceiveProps(nextProps) {
     if (this.props.testRunId !== nextProps.testRunId) {
@@ -28,24 +41,36 @@ class GoogleChartTest extends Component {
   };
 
   render() {
-    const { step_statuses } = this.state
+    if (!this.state.render)
+      return null;
+    const that = this;
     return (
       <div className={'my-pretty-chart-container'}>
         <h3> Google Chart </h3>
           <Chart
             chartType='Timeline'
             columns={[
-              {id: 'Test Run Id', type: 'string'},
-              {id: 'Description', type: 'string'},
-              {id: 'Start', type: 'date'},
-              {id: 'End', type: 'date'},
-              {id: 'Tooltip', role: 'tooltip', type: 'string'}
+              {type: 'string'},
+              {type: 'string'},
+              {type: 'number'},
+              {type: 'number'},
+              {role: 'tooltip', type: 'string'}
             ]}
-            rows={step_statuses}
+            rows={this.state.step_statuses}
             allowEmptyRows={true}
             width="100%"
             chartPackages={['timeline']}
-            options={this.state.options}
+            chartEvents={[
+              { eventName: 'select',
+                callback(Chart) {
+                    // Returns Chart so you can access props and  the ChartWrapper object from chart.wrapper
+                  const selected = Chart.chart.getSelection();
+                  const cValue = Chart.dataTable.getValue(selected[0].row, 4)
+                  that.passStepId(cValue);
+                  console.log(`Selected: ${cValue}`);
+                },
+              }
+            ]}
           />
       </div>
     );

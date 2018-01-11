@@ -17,18 +17,19 @@ class TestRun < ApplicationRecord
     grouped_step_statuses = step_statuses.includes(:step).group_by { |ss| ss.step.sequence_number }
     timeline = []
     grouped_step_statuses.keys.sort.each do |k|
-      timeline << fill_values(grouped_step_statuses[k], k)
+      @start_time ||= grouped_step_statuses[k].first.started_at
+      timeline << fill_values(grouped_step_statuses[k], k, @start_time)
     end
     timeline
   end
 
-  def fill_values(step_status, sequence_number)
+  def fill_values(step_status, sequence_number, start_time)
     array = []
     array << step_status.first.test_run_id.to_s
-    array << "#{sequence_number}: #{step_status.first.step.description}"
-    array << step_status.first.started_at
-    array << step_status.last.started_at
-    array << step_status.first.status
+    array << "#{sequence_number}: #{step_status.first.step.description} #{Time.at(step_status.first.started_at)}"
+    array << (step_status.first.started_at - start_time)*2000
+    array << (step_status.last.started_at - start_time)*2000
+    array << step_status.first.step_id.to_s
     array
   end
 
