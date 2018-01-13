@@ -7,7 +7,8 @@ class GoogleChartTest extends Component {
     super(props);
     this.state = {
       render: false,
-      step_statuses: [["Test Run ID", "Select a test run", 0, 3000, "pretend this is a step_id" ]]
+      stepInfo: [],
+      stepStatuses: [["Test Run ID", "Select a test run", 0, 3000, null ]]
     };
   };
 
@@ -18,15 +19,22 @@ class GoogleChartTest extends Component {
   }
 
   getInfo = (resource) => {
-    Client.search(resource, (step_statuses) => {
-      this.setState({step_statuses: step_statuses})
+    Client.search(resource, (result) => {
+      this.processArray(result);
     });
-  };
+  }
 
-  passStepId = (step_id) => {
-    this.props.handleStepSelect(step_id);
-    this.removeTooltip();
-  };
+  processArray = (steps) => {
+    const step_info = steps.map(a => a.splice(5, 1)[0]);
+    this.setState( {stepStatuses: steps, stepInfo: step_info});
+  }
+
+  passStepInfo = (step_id, step_info) => {
+    if (step_id) {
+      this.props.handleStepSelect(step_id, step_info);
+      this.removeTooltip();
+    };
+  }
 
   removeTooltip() {
     const tooltip = document.getElementsByClassName("google-visualization-tooltip").item(0);
@@ -35,10 +43,10 @@ class GoogleChartTest extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (this.props.testRunId !== nextProps.testRunId) {
-      console.log(`Old Props: ${this.props.testRunId}. Received New Props: TestRunId= ${nextProps.testRunId}`)
-     nextProps.testRunId && this.getInfo(`timeline/${nextProps.testRunId}`)
+      console.log(`Old Props: ${this.props.testRunId}. Received New Props: TestRunId= ${nextProps.testRunId}`);
+      nextProps.testRunId && this.getInfo(`timeline/${nextProps.testRunId}`);
     };
-  };
+  }
 
   render() {
     if (!this.state.render)
@@ -46,7 +54,7 @@ class GoogleChartTest extends Component {
     const that = this;
     return (
       <div className={'my-pretty-chart-container'}>
-        <h3> Google Chart </h3>
+        <h3> Timeline </h3>
           <Chart
             chartType='Timeline'
             columns={[
@@ -56,7 +64,7 @@ class GoogleChartTest extends Component {
               {type: 'number'},
               {role: 'tooltip', type: 'string'}
             ]}
-            rows={this.state.step_statuses}
+            rows={this.state.stepStatuses}
             allowEmptyRows={true}
             width="100%"
             chartPackages={['timeline']}
@@ -66,7 +74,8 @@ class GoogleChartTest extends Component {
                     // Returns Chart so you can access props and  the ChartWrapper object from chart.wrapper
                   const selected = Chart.chart.getSelection();
                   const cValue = Chart.dataTable.getValue(selected[0].row, 4)
-                  that.passStepId(cValue);
+                  const stepInfo = that.state.stepInfo[selected[0].row]
+                  that.passStepInfo(cValue, stepInfo);
                   console.log(`Selected: ${cValue}`);
                 },
               }

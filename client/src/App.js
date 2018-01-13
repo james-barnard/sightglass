@@ -15,14 +15,22 @@ class App extends Component {
 
     this.state = {
       testRunId: null,
-      selectedStepId: null
+      selectedStepId: null,
+      stepInfo: {
+        pending_time: 0,
+        soaking_time: 0,
+        run_time: 0,
+        duration: 0,
+        description: 0,
+        status: 0
+      }
     }
   };
 
 
-  setStepId = (value) => {
-    console.log(`Set Step Id: ${value}`)
-    this.setState({ selectedStepId: value})
+  setStepInfo = (step_id, step_info) => {
+    console.log(`Set Step Id: ${step_id}, Step Info: ${step_info.description}`)
+    this.setState({ selectedStepId: step_id, stepInfo: step_info })
   };
 
   setTestRun = (value) => {
@@ -52,6 +60,7 @@ class App extends Component {
               />
               <StepInfo
                 selectedStepId={selectedStepId}
+                stepInfo={this.state.stepInfo}
               />
             </Grid.Column>
             <Grid.Column width={4}>
@@ -71,7 +80,7 @@ class App extends Component {
               <GoogleChartTest
                 testRunId={testRunId}
                 selectedStepId={selectedStepId}
-                handleStepSelect={this.setStepId}
+                handleStepSelect={this.setStepInfo}
               />
             </Grid.Column>
           </Grid.Row>
