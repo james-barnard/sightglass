@@ -12,49 +12,64 @@
 
 ActiveRecord::Schema.define(version: 20171207200313) do
 
-  create_table "component_states", force: :cascade do |t|
+  create_table "component_states", id: false, force: :cascade do |t|
+    t.integer "id"
     t.integer "step_id"
     t.integer "component_id"
-    t.string "state"
+    t.string "state", limit: 10
     t.integer "sequence_number"
   end
 
-  create_table "components", force: :cascade do |t|
+  create_table "components", id: false, force: :cascade do |t|
+    t.integer "id"
     t.integer "test_cell_id"
-    t.string "name"
+    t.string "name", limit: 30
   end
 
-  create_table "programs", force: :cascade do |t|
-    t.string "purpose"
+  create_table "programs", id: false, force: :cascade do |t|
+    t.integer "id"
+    t.string "purpose", limit: 30
   end
 
-  create_table "step_statuses", force: :cascade do |t|
+  create_table "step_statuses", id: false, force: :cascade do |t|
+    t.integer "id"
     t.integer "step_id"
     t.integer "test_run_id"
-    t.string "status"
+    t.string "status", limit: 10
     t.integer "started_at"
     t.integer "soaking_at"
     t.integer "completed_at"
   end
 
-  create_table "steps", force: :cascade do |t|
+  create_table "steps", id: false, force: :cascade do |t|
+    t.integer "id"
     t.integer "program_id"
-    t.string "description"
+    t.string "description", limit: 30
     t.integer "duration"
     t.integer "sequence_number"
   end
 
-  create_table "test_cells", force: :cascade do |t|
-    t.string "name"
+  create_table "temp_states", id: false, force: :cascade do |t|
+    t.integer "id"
+    t.integer "step_id"
+    t.integer "component_id"
+    t.text "state"
+    t.integer "sequence_number"
   end
 
-  create_table "test_runs", force: :cascade do |t|
+  create_table "test_cells", id: false, force: :cascade do |t|
+    t.integer "id"
+    t.string "name", limit: 30
+  end
+
+  create_table "test_runs", id: false, force: :cascade do |t|
+    t.integer "id"
     t.integer "test_cell_id"
     t.integer "program_id"
-    t.string "name"
+    t.string "name", limit: 30
     t.integer "started_at"
     t.integer "completed_at"
-    t.string "status_final"
+    t.string "status_final", limit: 15
   end
 
 end

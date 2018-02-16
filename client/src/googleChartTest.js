@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Client from './Client';
 import { Chart } from 'react-google-charts';
+import './App.css';
 
 class GoogleChartTest extends Component {
   constructor(props) {
@@ -31,8 +32,8 @@ class GoogleChartTest extends Component {
 
   passStepInfo = (step_id, step_info) => {
     if (step_id) {
-      this.props.handleStepSelect(step_id, step_info);
       this.removeTooltip();
+      this.props.handleStepSelect(step_id, step_info);
     };
   }
 
@@ -53,35 +54,33 @@ class GoogleChartTest extends Component {
       return null;
     const that = this;
     return (
-      <div className={'my-pretty-chart-container'}>
-        <h3> Timeline </h3>
-          <Chart
-            chartType='Timeline'
-            columns={[
-              {type: 'string'},
-              {type: 'string'},
-              {type: 'number'},
-              {type: 'number'},
-              {role: 'tooltip', type: 'string'}
-            ]}
-            rows={this.state.stepStatuses}
-            allowEmptyRows={true}
-            width="100%"
-            chartPackages={['timeline']}
-            chartEvents={[
-              { eventName: 'select',
-                callback(Chart) {
-                    // Returns Chart so you can access props and  the ChartWrapper object from chart.wrapper
-                  const selected = Chart.chart.getSelection();
-                  const cValue = Chart.dataTable.getValue(selected[0].row, 4)
-                  const stepInfo = that.state.stepInfo[selected[0].row]
-                  that.passStepInfo(cValue, stepInfo);
-                  console.log(`Selected: ${cValue}`);
-                },
-              }
-            ]}
-          />
-      </div>
+      <Chart
+        chartType='Timeline'
+        columns={[
+          {type: 'string'},
+          {type: 'string'},
+          {type: 'number'},
+          {type: 'number'},
+          {role: 'tooltip', type: 'string'}
+        ]}
+        rows={this.state.stepStatuses}
+        allowEmptyRows={true}
+        width="100%"
+        height="5 em"
+        chartPackages={['timeline']}
+        chartEvents={[
+          { eventName: 'select',
+            callback(Chart) {
+                // Returns Chart so you can access props and  the ChartWrapper object from chart.wrapper
+              const selected = Chart.chart.getSelection();
+              const cValue = Chart.dataTable.getValue(selected[0].row, 4)
+              const stepInfo = that.state.stepInfo[selected[0].row]
+              that.passStepInfo(cValue, stepInfo);
+              console.log(`Selected: ${cValue}`);
+            },
+          }
+        ]}
+      />
     );
   }
 }

@@ -2,16 +2,13 @@ import React, { Component } from 'react';
 import { Table } from 'semantic-ui-react';
 
 class StepInfo extends Component {
-  constructor(props) {
-    super(props);
-  }
 
   render() {
     const { stepInfo, selectedStepId } = this.props
     return(
       <div>
-        <h3>Step Info</h3>
-        <h4>The Selected Step Id is: {selectedStepId}</h4>
+        <h4>Step Info</h4>
+        <p>The Selected Step Id is: {selectedStepId}</p>
         <Table compact>
           <Table.Body>
             <Table.Row>

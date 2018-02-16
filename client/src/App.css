@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+  font-size: 16px;
 }
 
 .App-logo {
@@ -9,7 +10,7 @@
 
 .App-header {
   background-color: #222;
-  height: 25px;
+  height: 35px;
   padding: 10px;
   color: white;
 }
@@ -20,6 +21,164 @@
 
 .App-intro {
   font-size: large;
+}
+
+.segment {
+  min-height: 5em;
+}
+
+.grid.row{
+  padding: 7px !important;
+}
+
+h4 {
+  font-size: small;
+}
+
+#machine_box {
+  box-sizing: border-box;
+  margin: auto;
+}
+
+#machine {
+  width: 100%;
+  height: auto;
+}
+
+.valve {
+  width: 6.5%;
+  height: auto;
+}
+
+.component {
+  opacity: .4 !important;
+}
+
+.component-active {
+  opacity: .8 !important;
+}
+
+#valve1 {
+  visibility: visible;
+  position: absolute;
+  left: 27.5%;
+  top: 25.1%;
+}
+
+#valve2 {
+  visibility: visible;
+  position: absolute;
+  left: 40.8%;
+  top: 34.9%;
+}
+
+#valve3 {
+  visibility: visible;
+  position: absolute;
+  left: 27.7%;
+  top: 52.1%;
+}
+
+#valve4 {
+  visibility: visible;
+  position: absolute;
+  left: 14.8%;
+  top: 45.2%;
+}
+
+#valve5 {
+  visibility: visible;
+  position: absolute;
+  left: 40.8%;
+  top: 58.5%;
+}
+
+#valve6 {
+  visibility: visible;
+  position: absolute;
+  left: 27.3%;
+  top: 83.3%;
+}
+
+#valve7 {
+  visibility: visible;
+  position: absolute;
+  left: 70.5%;
+  top: 88.2%;
+}
+
+#valve8 {
+  opacity: .6;
+  visibility: visible;
+  position: absolute;
+  left: 37.5%;
+  top: 43.7%;
+}
+
+#valve9 {
+  opacity: .6;
+  visibility: visible;
+  position: absolute;
+  left: 20.5%;
+  top: 48.4%;
+}
+
+#valve10 {
+  opacity: .6;
+  visibility: visible;
+  position: absolute;
+  left: 31.5%;
+  top: 28.5%;
+}
+
+#valve11 {
+  opacity: .6;
+  visibility: visible;
+  position: absolute;
+  left: 23.8%;
+  top: 28.5%;
+}
+
+#valve12 {
+  opacity: .6;
+  visibility: visible;
+  position: absolute;
+  left: 22.2%;
+  top: 54.5%;
+}
+
+#valve13 {
+  opacity: .6;
+  visibility: visible;
+  position: absolute;
+  left: 59%;
+  top: 91.3%;
+}
+
+#valve14 {
+  opacity: .6;
+  visibility: visible;
+  position: absolute;
+  left: 31.7%;
+  top: 54.5%;
+}
+
+#pump15 {
+  visibility: visible;
+  width: 13%;
+  height: auto;
+  position: absolute;
+  left: 28.3%;
+  top: 90%;
+}
+
+#pump16 {
+  visibility: visible;
+  width: 13%;
+  height: auto;
+  position: absolute;
+  left: 11%;
+  top: 90%;
 }
 
 @keyframes App-logo-spin {

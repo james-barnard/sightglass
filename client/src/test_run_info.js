@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Client from './Client';
 import { Table } from 'semantic-ui-react'
-
+import './App.css';
 
 class TestRunInfo extends Component {
   constructor(props) {
@@ -72,7 +72,7 @@ class TestRunInfo extends Component {
 
     return(
       <div>
-        <h3>Test Run Info</h3>
+        <h4>Test Run Info</h4>
           {testRunInfo(this.state.test_run)}
       </div>
     );

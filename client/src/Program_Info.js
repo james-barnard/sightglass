@@ -33,7 +33,6 @@ class ProgramInfo extends Component {
   };
 
   render() {
-    const { testRunId } = this.props
     const info = this.state.program_info
     const ProgramInfo = (
       <Table compact>
@@ -64,8 +63,7 @@ class ProgramInfo extends Component {
 
     return(
       <div>
-        <h3>Program Info</h3>
-        <h4>Test Run Id: {testRunId}</h4>
+        <h4>Program Info</h4>
           {ProgramInfo}
       </div>
     );

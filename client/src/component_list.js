@@ -1,11 +1,31 @@
 import React, { Component } from 'react';
 import Client from './Client';
 import { Table } from 'semantic-ui-react'
+import './App.css';
 
 class ComponentList extends Component {
-  state = {
-    components: []
+  constructor(props) {
+    super(props)
+    
+    this.state = {
+      components: [{"id":1,"test_cell_id":1,"name":"Brew Vacuum"},
+                  {"id":2,"test_cell_id":1,"name":"Brew In"},
+                  {"id":3,"test_cell_id":1,"name":"Brew Out"},
+                  {"id":4,"test_cell_id":1,"name":"Filter purge Out"},
+                  {"id":5,"test_cell_id":1,"name":"Bright In"},
+                  {"id":6,"test_cell_id":1,"name":"Bright Out"},
+                  {"id":7,"test_cell_id":1,"name":"Decant"},
+                  {"id":8,"test_cell_id":1,"name":"Filter H2O"},
+                  {"id":9,"test_cell_id":1,"name":"Filter Backflush"},
+                  {"id":10,"test_cell_id":1,"name":"Brew H2O"},
+                  {"id":11,"test_cell_id":1,"name":"Brew N2"},
+                  {"id":12,"test_cell_id":1,"name":"process H2O"},
+                  {"id":13,"test_cell_id":1,"name":"Condition N2"},
+                  {"id":14,"test_cell_id":1,"name":"Burp"}],
+      activeRow: null
+    }
   };
+
 
   getComponentInfo = (resource, stepId) => {
     if (stepId !== null)
@@ -13,6 +33,7 @@ class ComponentList extends Component {
       this.setState({
         components: components
       });
+      this.props.handleComponentInfo(components);
     });
   };
 
@@ -26,28 +47,47 @@ class ComponentList extends Component {
     }
     if (this.props.testRunId !== nextProps.testRunId) {
       this.setState({
-        components: []
+        components: [{"id":1,"test_cell_id":1,"name":"Brew Vacuum"},
+                  {"id":2,"test_cell_id":1,"name":"Brew In"},
+                  {"id":3,"test_cell_id":1,"name":"Brew Out"},
+                  {"id":4,"test_cell_id":1,"name":"Filter purge Out"},
+                  {"id":5,"test_cell_id":1,"name":"Bright In"},
+                  {"id":6,"test_cell_id":1,"name":"Bright Out"},
+                  {"id":7,"test_cell_id":1,"name":"Decant"},
+                  {"id":8,"test_cell_id":1,"name":"Filter H2O"},
+                  {"id":9,"test_cell_id":1,"name":"Filter Backflush"},
+                  {"id":10,"test_cell_id":1,"name":"Brew H2O"},
+                  {"id":11,"test_cell_id":1,"name":"Brew N2"},
+                  {"id":12,"test_cell_id":1,"name":"process H2O"},
+                  {"id":13,"test_cell_id":1,"name":"Condition N2"},
+                  {"id":14,"test_cell_id":1,"name":"Burp"}]
       })
     }
   }
+  handleClick = (e) => {
+    e.currentTarget.rowIndex && this.props.handleComponentSelect(e.currentTarget.rowIndex);
+    this.setState({ activeRow: e.currentTarget.rowIndex })
+  }
 
-  render() {
-
-    const { selectedStepId } = this.props
-    const componentList = this.state.components.map((component) => (
-      <Table.Row key={component.id}>
+  componentRows = (component) => {
+    let isActive = ''
+    if (this.state.activeRow === component.id)
+      isActive = 'active'
+    return(
+      <Table.Row key={component.id} onClick={this.handleClick} className={isActive} >
         <Table.Cell>{component.id}</Table.Cell>
         <Table.Cell>{component.name}</Table.Cell>
         <Table.Cell>{component.state}</Table.Cell>
         <Table.Cell>{component.step_id}</Table.Cell>
       </Table.Row>
-    ));
+    )
+  };
 
+  render() {
     return(
       <div>
-        <h3>Component List</h3>
-        <h4>The Selected Step Id is: {selectedStepId}</h4>
-        <Table compact>
+        <h4>Component List</h4>
+        <Table compact selectable>
           <Table.Header>
             <Table.Row>
               <Table.HeaderCell>ID</Table.HeaderCell>
@@ -57,7 +97,7 @@ class ComponentList extends Component {
             </Table.Row>
           </Table.Header>
           <Table.Body>
-            {componentList}
+            { this.state.components.map(component => this.componentRows(component)) }
           </Table.Body>
         </Table>
       </div>

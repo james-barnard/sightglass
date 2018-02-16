@@ -51,8 +51,7 @@ class Timeline extends Component {
 
     return(
       <div>
-        <h3>Timeline</h3>
-        <Menu>
+        <Menu compact>
           {TimelineItems}
         </Menu>
       </div>

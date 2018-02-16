@@ -28,15 +28,14 @@ class TestRunDropdown extends Component {
   }
 
   render() {
-    const that = this;
     const { raw_test_runs } = this.state
     const DropdownSearchSelection = (
-      <Dropdown placeholder='Select Test Run' fluid selection options={raw_test_runs} onChange={that.testRunClicked} />
+      <Dropdown placeholder='Select Test Run' fluid selection options={raw_test_runs} onChange={this.testRunClicked} />
     )
 
     return(
       <div>
-        <h3>DropDown for Test Runs </h3>
+        <h4>DropDown for Test Runs </h4>
         {DropdownSearchSelection}
       </div>
     )

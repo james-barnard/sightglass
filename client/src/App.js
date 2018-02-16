@@ -1,13 +1,13 @@
 import './App.css';
 import React, { Component } from 'react';
-import { Grid } from 'semantic-ui-react'
-import { Image } from 'semantic-ui-react'
+import { Grid, Segment } from 'semantic-ui-react'
 import TestRunInfo from './test_run_info.js'
 import ComponentList from './component_list.js'
 import ProgramInfo from './Program_Info.js'
 import TestRunDropdown from './TestRunDropdown.js'
 import StepInfo from './StepInfo.js'
 import GoogleChartTest from './googleChartTest.js'
+import GraphicWindow from './graphic-window.js'
 
 class App extends Component {
   constructor(props) {
@@ -16,6 +16,7 @@ class App extends Component {
     this.state = {
       testRunId: null,
       selectedStepId: null,
+      selectedComponent: null,
       stepInfo: {
         pending_time: 0,
         soaking_time: 0,
@@ -23,7 +24,8 @@ class App extends Component {
         duration: 0,
         description: 0,
         status: 0
-      }
+      },
+      component_list_info: []
     }
   };
 
@@ -33,58 +35,82 @@ class App extends Component {
     this.setState({ selectedStepId: step_id, stepInfo: step_info })
   };
 
+  setComponentInfo = (component_info) => {
+    this.setState({ component_list_info: component_info})
+  };
+
   setTestRun = (value) => {
     console.log(`Set Test Run: ${value}`)
     this.setState({ testRunId: value })
   };
 
+  setSelectedComponent = (rowIndex) => {
+    console.log(`setSelectedComponent: ${rowIndex}`)
+    this.setState({ selectedComponent: rowIndex })
+  }
+
   render() {
-    const { testRunId, selectedStepId } = this.state;
+    const { testRunId, selectedStepId, component_list_info, selectedComponent } = this.state;
     return (
       <div className="App">
         <header className="App-header">
         {/* <img src={logo} className="App-logo" alt="logo" /> */}
         <h1 className="App-title">Welcome to Nitrobrew - Sightglass</h1>
         </header>
-        <Grid celled>
+        <Segment>
+        <Grid columns='equal'>
           <Grid.Row>
-            <Grid.Column width={3}>
-              <TestRunDropdown
-                handleTestRunSelect={this.setTestRun}
-                />
-              <TestRunInfo
-                testRunId={testRunId}
-              />
-              <ProgramInfo 
-                testRunId={testRunId}
-              />
-              <StepInfo
-                selectedStepId={selectedStepId}
-                stepInfo={this.state.stepInfo}
-              />
-            </Grid.Column>
-            <Grid.Column width={4}>
-              <ComponentList
-                testRunId={testRunId}
-                selectedStepId={selectedStepId}
-              />
-            </Grid.Column>
-            <Grid.Column width={7}>
-              <Image 
-                src='https://placekitten.com/500/640'
-              />
-            </Grid.Column>
-          </Grid.Row>
-          <Grid.Row>
-            <Grid.Column width={13}>
+            <Grid.Column>
+              <Segment>
               <GoogleChartTest
                 testRunId={testRunId}
                 selectedStepId={selectedStepId}
                 handleStepSelect={this.setStepInfo}
               />
+              </Segment>
+            </Grid.Column>
+          </Grid.Row>
+          <Grid.Row>
+            <Grid.Column width={4}>
+                <Segment>
+                  <TestRunDropdown handleTestRunSelect={this.setTestRun} />
+                </Segment>
+                <Segment>
+                  <TestRunInfo testRunId={testRunId} />
+                </Segment>
+            </Grid.Column>
+            <Grid.Column width={4}>
+                <Segment>  
+                  <ProgramInfo testRunId={testRunId} />
+                </Segment>
+                <Segment>  
+                  <StepInfo
+                      selectedStepId={selectedStepId}
+                      stepInfo={this.state.stepInfo}
+                    />
+                </Segment>
+            </Grid.Column>
+            <Grid.Column width={4}>
+              <Segment>
+              <ComponentList
+                testRunId={testRunId}
+                selectedStepId={selectedStepId}
+                handleComponentInfo={this.setComponentInfo}
+                handleComponentSelect={this.setSelectedComponent}
+              />
+              </Segment>
+            </Grid.Column>
+            <Grid.Column>
+              <Segment>
+                <GraphicWindow 
+                components={component_list_info}
+                selectedComponent={selectedComponent}
+                />
+              </Segment>
             </Grid.Column>
           </Grid.Row>
         </Grid>
+        </Segment>
       </div>
     );
   }
