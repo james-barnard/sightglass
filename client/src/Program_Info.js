@@ -23,14 +23,10 @@ class ProgramInfo extends Component {
   };
 
   componentWillReceiveProps(nextProps) {
-    if (this.props.testRunId !== nextProps.testRunId) { 
+    if (this.props.testRunId !== nextProps.testRunId || this.props.tickCounter !== nextProps.tickCounter) {
       nextProps.testRunId && this.getInfo(`program_info/${nextProps.testRunId}`)
     }
   }
-
-  componentDidMount() {
-    console.log("Program Info Mounted")
-  };
 
   render() {
     const info = this.state.program_info

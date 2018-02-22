@@ -19,10 +19,6 @@ class TestRunDropdown extends Component {
     });
   };
 
-  componentDidMount() {
-    console.log("TestRunDropdown Mounted")
-  };
-
   testRunClicked = (e, { value }) => {
     (value) && this.props.handleTestRunSelect(value)
   }
@@ -35,7 +31,7 @@ class TestRunDropdown extends Component {
 
     return(
       <div>
-        <h4>DropDown for Test Runs </h4>
+        <h4>Completed Test Runs</h4>
         {DropdownSearchSelection}
       </div>
     )

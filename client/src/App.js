@@ -8,6 +8,8 @@ import TestRunDropdown from './TestRunDropdown.js'
 import StepInfo from './StepInfo.js'
 import GoogleChartTest from './googleChartTest.js'
 import GraphicWindow from './graphic-window.js'
+import LiveModeTimer from './LiveModeTimer.jsx'
+
 
 class App extends Component {
   constructor(props) {
@@ -25,10 +27,10 @@ class App extends Component {
         description: 0,
         status: 0
       },
-      component_list_info: []
+      component_list_info: [],
+      tickCounter: 0
     }
   };
-
 
   setStepInfo = (step_id, step_info) => {
     console.log(`Set Step Id: ${step_id}, Step Info: ${step_info.description}`)
@@ -49,6 +51,10 @@ class App extends Component {
     this.setState({ selectedComponent: rowIndex })
   }
 
+  UpdateTick = (counter) => {
+    this.setState({ tickCounter: counter })
+  }
+
   render() {
     const { testRunId, selectedStepId, component_list_info, selectedComponent } = this.state;
     return (
@@ -58,58 +64,71 @@ class App extends Component {
         <h1 className="App-title">Welcome to Nitrobrew - Sightglass</h1>
         </header>
         <Segment>
-        <Grid columns='equal'>
-          <Grid.Row>
-            <Grid.Column>
-              <Segment>
-              <GoogleChartTest
-                testRunId={testRunId}
-                selectedStepId={selectedStepId}
-                handleStepSelect={this.setStepInfo}
-              />
-              </Segment>
-            </Grid.Column>
-          </Grid.Row>
-          <Grid.Row>
-            <Grid.Column width={4}>
+          <Grid columns='equal'>
+            <Grid.Row>
+              <Grid.Column>
                 <Segment>
-                  <TestRunDropdown handleTestRunSelect={this.setTestRun} />
+                  <GoogleChartTest
+                    testRunId={testRunId}
+                    selectedStepId={selectedStepId}
+                    handleStepSelect={this.setStepInfo}
+                    tickCounter={this.state.tickCounter}
+                  />
                 </Segment>
-                <Segment>
-                  <TestRunInfo testRunId={testRunId} />
-                </Segment>
-            </Grid.Column>
-            <Grid.Column width={4}>
-                <Segment>  
-                  <ProgramInfo testRunId={testRunId} />
-                </Segment>
-                <Segment>  
-                  <StepInfo
-                      selectedStepId={selectedStepId}
-                      stepInfo={this.state.stepInfo}
+              </Grid.Column>
+            </Grid.Row>
+            <Grid.Row>
+              <Grid.Column width={4}>
+                  <Segment>
+                    <TestRunDropdown handleTestRunSelect={this.setTestRun} />
+                  </Segment>
+                  <Segment>
+                    <LiveModeTimer
+                      handleUpdateTick={this.UpdateTick}
                     />
+                  </Segment>
+                  <Segment>
+                    <TestRunInfo
+                      testRunId={testRunId}
+                      tickCounter={this.state.tickCounter}
+                    />
+                  </Segment>
+              </Grid.Column>
+              <Grid.Column width={4}>
+                <Segment>
+                  <ProgramInfo
+                    testRunId={testRunId}
+                    tickCounter={this.state.tickCounter}
+                  />
                 </Segment>
-            </Grid.Column>
-            <Grid.Column width={4}>
-              <Segment>
-              <ComponentList
-                testRunId={testRunId}
-                selectedStepId={selectedStepId}
-                handleComponentInfo={this.setComponentInfo}
-                handleComponentSelect={this.setSelectedComponent}
-              />
-              </Segment>
-            </Grid.Column>
-            <Grid.Column>
-              <Segment>
-                <GraphicWindow 
-                components={component_list_info}
-                selectedComponent={selectedComponent}
+                <Segment>
+                  <StepInfo
+                    selectedStepId={selectedStepId}
+                    stepInfo={this.state.stepInfo}
+                    tickCounter={this.state.tickCounter}
+                  />
+                </Segment>
+              </Grid.Column>
+              <Grid.Column width={4}>
+                <Segment>
+                <ComponentList
+                  testRunId={testRunId}
+                  selectedStepId={selectedStepId}
+                  handleComponentInfo={this.setComponentInfo}
+                  handleComponentSelect={this.setSelectedComponent}
                 />
-              </Segment>
-            </Grid.Column>
-          </Grid.Row>
-        </Grid>
+                </Segment>
+              </Grid.Column>
+              <Grid.Column>
+                <Segment>
+                  <GraphicWindow 
+                  components={component_list_info}
+                  selectedComponent={selectedComponent}
+                  />
+                </Segment>
+              </Grid.Column>
+            </Grid.Row>
+          </Grid>
         </Segment>
       </div>
     );

@@ -43,8 +43,7 @@ class GoogleChartTest extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (this.props.testRunId !== nextProps.testRunId) {
-      console.log(`Old Props: ${this.props.testRunId}. Received New Props: TestRunId= ${nextProps.testRunId}`);
+    if (this.props.testRunId !== nextProps.testRunId || this.props.tickCounter !== nextProps.tickCounter) {
       nextProps.testRunId && this.getInfo(`timeline/${nextProps.testRunId}`);
     };
   }

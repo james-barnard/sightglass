@@ -20,14 +20,10 @@ class TestRunInfo extends Component {
   };
   
   componentWillReceiveProps(nextProps) {
-    if (this.props.testRunId !== nextProps.testRunId) { 
+    if (this.props.testRunId !== nextProps.testRunId || this.props.tickCounter !== nextProps.tickCounter) {
       nextProps.testRunId && this.getInfo(`test_run/${nextProps.testRunId}`)
     }
   }
-
-  componentDidMount() {
-    console.log("Test Run Mounted" )
-  };
 
   render() {
     const testRunInfo = (test_run) => {

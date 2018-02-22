@@ -19,7 +19,7 @@ class ComponentList extends Component {
                   {"id":9,"test_cell_id":1,"name":"Filter Backflush"},
                   {"id":10,"test_cell_id":1,"name":"Brew H2O"},
                   {"id":11,"test_cell_id":1,"name":"Brew N2"},
-                  {"id":12,"test_cell_id":1,"name":"process H2O"},
+                  {"id":12,"test_cell_id":1,"name":"Process H2O"},
                   {"id":13,"test_cell_id":1,"name":"Condition N2"},
                   {"id":14,"test_cell_id":1,"name":"Burp"}],
       activeRow: null
@@ -35,10 +35,6 @@ class ComponentList extends Component {
       });
       this.props.handleComponentInfo(components);
     });
-  };
-
-  componentDidMount(props) {
-    console.log("ComponentsList Mounted")
   };
 
   componentWillReceiveProps(nextProps) {
@@ -58,7 +54,7 @@ class ComponentList extends Component {
                   {"id":9,"test_cell_id":1,"name":"Filter Backflush"},
                   {"id":10,"test_cell_id":1,"name":"Brew H2O"},
                   {"id":11,"test_cell_id":1,"name":"Brew N2"},
-                  {"id":12,"test_cell_id":1,"name":"process H2O"},
+                  {"id":12,"test_cell_id":1,"name":"Process H2O"},
                   {"id":13,"test_cell_id":1,"name":"Condition N2"},
                   {"id":14,"test_cell_id":1,"name":"Burp"}]
       })
