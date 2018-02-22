@@ -1,13 +1,13 @@
 import './App.css';
 import React, { Component } from 'react';
 import { Grid, Segment } from 'semantic-ui-react'
-import TestRunInfo from './test_run_info.js'
-import ComponentList from './component_list.js'
+import TestRunInfo from './TestRunInfo.jsx'
+import ComponentList from './ComponentList.jsx'
 import ProgramInfo from './Program_Info.js'
 import TestRunDropdown from './TestRunDropdown.js'
 import StepInfo from './StepInfo.js'
-import GoogleChartTest from './googleChartTest.js'
-import GraphicWindow from './graphic-window.js'
+import Timeline from './Timeline.jsx'
+import GraphicWindow from './GraphicWindow.jsx'
 import LiveModeTimer from './LiveModeTimer.jsx'
 
 
@@ -68,7 +68,7 @@ class App extends Component {
             <Grid.Row>
               <Grid.Column>
                 <Segment>
-                  <GoogleChartTest
+                  <Timeline
                     testRunId={testRunId}
                     selectedStepId={selectedStepId}
                     handleStepSelect={this.setStepInfo}

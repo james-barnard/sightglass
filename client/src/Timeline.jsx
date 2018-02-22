@@ -3,7 +3,7 @@ import Client from './Client';
 import { Chart } from 'react-google-charts';
 import './App.css';
 
-class GoogleChartTest extends Component {
+class Timeline extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -83,4 +83,4 @@ class GoogleChartTest extends Component {
     );
   }
 }
-export default GoogleChartTest;
+export default Timeline;
