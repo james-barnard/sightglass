@@ -25,7 +25,7 @@ class App extends Component {
         run_time: 0,
         duration: 0,
         description: 0,
-        status: 0
+        status: ""
       },
       component_list_info: [],
       tickCounter: 0
