@@ -1,7 +1,6 @@
 FactoryBot.define do
   factory :test_run do
     id 1
-    test_cell_id 1
     # program
     name "Test Run Name"
     started_at Time.now
@@ -11,9 +10,9 @@ FactoryBot.define do
 
   factory :step_status do
     sequence(:id) { |n| n }
+    # test_run 1
     # step
-    # test_run
-    status "completed"
+    status "pending"
     started_at Time.now
   end
 

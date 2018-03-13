@@ -23,7 +23,18 @@ class TestRun < ApplicationRecord
     timeline
   end
 
-  def fill_values(step_status, sequence_number, start_time)
+  def live_timeline
+    grouped_steps = program.steps.includes(:step_statuses).group_by { |ss| ss.sequence_number}
+    timeline = []
+    grouped_steps.each do |key, value|
+      @time ||= 0
+      timeline << fill_live_values(value, key, @time)
+      @time = value.first.duration + @time
+    end
+    timeline
+  end
+
+   def fill_values(step_status, sequence_number, start_time)
     [
       step_status.first.test_run_id.to_s,
       "#{sequence_number}: #{step_status.first.step.description}",
@@ -32,6 +43,26 @@ class TestRun < ApplicationRecord
       step_status.first.step_id.to_s,
       build_step_info(step_status)
     ]
+  end
+
+  def fill_live_values(steps_array, sequence_number, time)
+    [
+      steps_array.first.program_id.to_s,
+      "#{sequence_number}: #{steps_array.first.description}",
+      time*1000,
+      (time+steps.first.duration)*1000,
+      steps_array.first.id.to_s,
+      build_live_step_info(steps_array)
+    ]
+  end
+
+  def build_live_step_info(steps_array)
+    step_info = {}
+    step_info[:duration] = steps_array.first.duration
+    step_info[:description] = steps_array.first.description
+    step_info[:status] = steps_array.last.step_statuses.last.status
+    calc_live_times(steps_array, step_info)
+    step_info
   end
 
   def build_step_info(step_status)
@@ -43,9 +74,15 @@ class TestRun < ApplicationRecord
     step_info
   end
 
-  def calc_times(step_status, step_info)
+  def calc_live_times(steps_array, step_info)
+    step_info[:pending_time] = "n/a"
+    step_info[:soaking_time] = "n/a"
+    step_info[:run_time] = step_info[:duration]
+  end
+
+  def calc_times(steps_array, step_info)
     temp = {}
-    step_status.each_with_object(temp) {|s, memo| memo[s.status] = s.started_at }
+    steps_array.each_with_object(temp) {|s, memo| memo[s.status] = s.started_at }
     temp["pending"] ? step_info[:pending_time] = (temp["soaking"] - temp["pending"]) : step_info[:pending_time] = 0
     temp["completed"] ? step_info[:soaking_time] = temp["completed"] - temp["soaking"] : step_info[:soaking_time] = 0
     temp["pending"] ? step_info[:run_time] = step_info[:pending_time] + step_info[:soaking_time] : step_info[:run_time] = step_info[:soaking_time]

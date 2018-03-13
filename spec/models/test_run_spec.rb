@@ -7,6 +7,14 @@ RSpec.describe TestRun, type: :model do
 
   let(:test_run1) { TestRun.find 1 }
   let(:elapsed_time) { 30 }
+  let(:test_run1_timeline) { [["1", "11: step description", 0, 30000, "1",
+                              {:pending_time=>30, :soaking_time=>0, :run_time=>30,
+                               :duration=>1, :description=>"step description",
+                               :status=>"completed"}],
+                              ["1", "12: step description", 0, 30000, "2",
+                              {:pending_time=>30, :soaking_time=>0, :run_time=>30,
+                               :duration=>1, :description=>"step description",
+                               :status=>"completed"}]] }
 
   it "knows how long the program took to run" do
     expect(test_run1.run_time).to eq (elapsed_time)
@@ -25,7 +33,18 @@ RSpec.describe TestRun, type: :model do
   end
 
   it "knows the status of the step in progress" do
-    expect(test_run1.status).to eq ("soaking")
+    expect(test_run1.step_statuses.last.status).to eq ("completed")
+  end
+
+  describe "#timeline" do
+    context "for a completed program" do
+      it "returns an array with the step status information for each step in the program" do
+
+        expect(test_run1.timeline).to eq(test_run1_timeline)
+      end
+
+      it "includes the step info in a hash"
+    end
   end
 
 end

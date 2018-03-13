@@ -70,7 +70,7 @@ class Timeline extends Component {
         chartEvents={[
           { eventName: 'select',
             callback(Chart) {
-                // Returns Chart so you can access props and  the ChartWrapper object from chart.wrapper
+                // Returns Chart so you can access props and the ChartWrapper object from chart.wrapper
               const selected = Chart.chart.getSelection();
               const cValue = Chart.dataTable.getValue(selected[0].row, 4)
               const stepInfo = that.state.stepInfo[selected[0].row]

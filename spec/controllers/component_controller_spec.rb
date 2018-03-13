@@ -3,13 +3,15 @@ require 'rails_helper'
 describe ComponentController do
 
   let(:states) { [{"id" => 1,
+         "test_cell_id" => 1,
                  "name" => "Component Name",
-              "step_id" => 1,
-                "state" => "open"},
+                "state" => "open",
+              "step_id" => 1},
                  { "id" => 2,
+         "test_cell_id" => 1,
                  "name" => "Component Name",
-              "step_id" => 1,
-                "state" => "open"}] }
+                "state" => "open",
+              "step_id" => 1}] }
   before(:each) do
     TestDb::reset_database
   end
