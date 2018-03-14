@@ -163,22 +163,22 @@ h4 {
   top: 54.5%;
 }
 
-#pump15 {
+#valve15 {
   visibility: visible;
-  width: 13%;
+  width: 10%;
   height: auto;
   position: absolute;
-  left: 28.3%;
-  top: 90%;
+  left: 29.8%;
+  top: 90.6%;
 }
 
-#pump16 {
+#valve16 {
   visibility: visible;
-  width: 13%;
+  width: 10%;
   height: auto;
   position: absolute;
-  left: 11%;
-  top: 90%;
+  left: 12.7%;
+  top: 90.6%;
 }
 
 @keyframes App-logo-spin {
