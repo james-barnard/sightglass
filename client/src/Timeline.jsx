@@ -38,14 +38,23 @@ class Timeline extends Component {
   }
 
   removeTooltip() {
-    const tooltip = document.getElementsByClassName("google-visualization-tooltip").item(0);
-    tooltip.parentNode.removeChild(tooltip);
+    var toolTips = document.getElementsByClassName("google-visualization-tooltip")
+    for(var i=0; i<=toolTips.length; i++) {
+      console.log(`there were ${toolTips.length} tooltips`);
+      toolTips[i].remove()
+      console.log(`there are now ${document.getElementsByClassName('google-visualization-tooltip').length} tooltips.`);
+    }
   }
 
   componentWillReceiveProps(nextProps) {
+    this.removeTooltip
     if (this.props.testRunId !== nextProps.testRunId || this.props.tickCounter !== nextProps.tickCounter) {
       nextProps.testRunId && this.getInfo(`timeline/${nextProps.testRunId}`);
     };
+  }
+
+  componentWillUnmount() {
+    console.log('google chart unmounting')
   }
 
   render() {

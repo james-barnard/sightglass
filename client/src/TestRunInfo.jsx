@@ -33,11 +33,11 @@ class TestRunInfo extends Component {
             <Table.Body>
               <Table.Row>
                 <Table.Cell textAlign='right'>Id:</Table.Cell>
-                <Table.Cell>{test_run.id}</Table.Cell>
+                <Table.Cell>{test_run.test_run_id}</Table.Cell>
               </Table.Row>
               <Table.Row>
                 <Table.Cell textAlign='right'>Name:</Table.Cell>
-                <Table.Cell>{test_run.name}</Table.Cell>
+                <Table.Cell>{test_run.purpose}</Table.Cell>
               </Table.Row>
               <Table.Row>
                 <Table.Cell textAlign='right'>Program Id:</Table.Cell>

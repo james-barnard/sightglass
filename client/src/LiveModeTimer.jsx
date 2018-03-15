@@ -42,7 +42,7 @@ class LiveModeTimer extends Component {
 
   increment() {
     this.setState((prevState) => ({tickCounter: prevState.tickCounter +1}))
-    console.log(`${this.state.tickCounter}`)
+    console.log(`increment ${this.state.tickCounter}`)
     this.props.handleUpdateTick(this.state.tickCounter);
   }
 
