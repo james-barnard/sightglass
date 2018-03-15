@@ -5,7 +5,7 @@ class TestRunController < ApplicationController
 
   def show
     @test_run = TestRun.find(params[:id])
-    render json: @test_run
+    render json: @test_run.test_run_info
   end
 
   def program_info

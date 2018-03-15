@@ -38,13 +38,14 @@ RSpec.describe TestRun, type: :model do
 
   describe "#timeline" do
     context "for a completed program" do
-      it "returns an array with the step status information for each step in the program" do
-
-        expect(test_run1.timeline).to eq(test_run1_timeline)
-      end
-
-      it "includes the step info in a hash"
+      xit "returns an array with the step status information for each step in the program"
     end
+
+    context "for a future program" do
+      it "returns an array with the information for each step"
+    end
+    
+    it "includes the step info in a hash"
   end
 
 end

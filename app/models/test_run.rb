@@ -13,6 +13,18 @@ class TestRun < ApplicationRecord
     }
   end
 
+  def test_run_info
+    start_string = started_at
+    {
+      test_run_id: id,
+      program_id: program.id,
+      purpose: program.purpose,
+      started_at: Time.at(started_at).strftime("%B %e, %Y, %I:%M %p"),
+      completed_at: Time.at(completed_at_time).strftime("%B %e, %Y, %I:%M %p"),
+      status_final: status
+    }
+  end
+
   def timeline
     grouped_step_statuses = step_statuses.includes(:step).group_by { |ss| ss.step.sequence_number }
     timeline = []
@@ -108,6 +120,10 @@ class TestRun < ApplicationRecord
   def status
     return "N/A" unless step_statuses.count > 0
     step_statuses.order(:id).last.status
+  end
+
+  def completed_at_time
+    step_statuses.order(:id).last.started_at
   end
 
   def self.test_run_select_list
