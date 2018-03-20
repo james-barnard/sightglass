@@ -47,7 +47,6 @@ class Timeline extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    this.removeTooltip
     if (this.props.testRunId !== nextProps.testRunId || this.props.tickCounter !== nextProps.tickCounter) {
       nextProps.testRunId && this.getInfo(`timeline/${nextProps.testRunId}`);
     };

@@ -7,11 +7,11 @@ RSpec.describe TestRun, type: :model do
 
   let(:test_run1) { TestRun.find 1 }
   let(:elapsed_time) { 30 }
-  let(:test_run1_timeline) { [["1", "11: step description", 0, 30000, "1",
+  let(:test_run1_timeline) { [["1", "25: step description", 0, 30000, "1",
                               {:pending_time=>30, :soaking_time=>0, :run_time=>30,
                                :duration=>1, :description=>"step description",
                                :status=>"completed"}],
-                              ["1", "12: step description", 0, 30000, "2",
+                              ["1", "26: step description", 0, 30000, "2",
                               {:pending_time=>30, :soaking_time=>0, :run_time=>30,
                                :duration=>1, :description=>"step description",
                                :status=>"completed"}]] }
@@ -38,7 +38,10 @@ RSpec.describe TestRun, type: :model do
 
   describe "#timeline" do
     context "for a completed program" do
-      xit "returns an array with the step status information for each step in the program"
+      # todo: fix this spec so it is not dependant on running the whole suite
+      it "returns an array with the step status information for each step in the program" do
+        expect(test_run1.timeline).to eq(test_run1_timeline)
+      end
     end
 
     context "for a future program" do
