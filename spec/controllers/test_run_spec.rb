@@ -18,12 +18,12 @@ describe TestRunController do
     expect(response.content_type).to eq("application/json")
   end
 
-  it "knows its program information" do
+  it "returns its program information" do
     get :program_info, :format => :JSON, :params => {:id => 1}
     expect(JSON.parse(response.body).keys.sort).to eq(PROGRAM_INFO_KEYS.sort)
   end
 
-  xit "knows its step status info" do
+  xit "returns its step status info" do
     get :timeline, :format => :JSON, :params => {:id => 1}
     expect(JSON.parse(response.body).first[:step_info].keys.sort).to eq(STEP_INFO_KEYS.sort)
   end

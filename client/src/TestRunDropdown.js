@@ -12,6 +12,7 @@ class TestRunDropdown extends Component {
   };
 
   getInfo = (resource) => {
+    console.log("TestRunDropdown getInfo")
     Client.search(resource, (result) => {
       this.setState({
         raw_test_runs: result
@@ -23,10 +24,17 @@ class TestRunDropdown extends Component {
     (value) && this.props.handleTestRunSelect(value)
   }
 
+  componentWillReceiveProps(nextProps) {
+      console.log(`this.props.programId for test run dropwdown: ${this.props.programId}`)    
+      console.log(`nextProps.programId for test run dropwdown: ${nextProps.programId}`)
+    if (nextProps.programId !== this.props.programId)
+      nextProps.programId && this.getInfo(`program_test_runs/${nextProps.programId}`)
+  }
+
   render() {
     const { raw_test_runs } = this.state
     const DropdownSearchSelection = (
-      <Dropdown placeholder='Select Test Run' fluid selection options={raw_test_runs} onChange={this.testRunClicked} />
+      <Dropdown placeholder='Select Test Run' fluid search selection options={raw_test_runs} onChange={this.testRunClicked} />
     )
 
     return(

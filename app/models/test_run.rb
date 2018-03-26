@@ -3,6 +3,19 @@ class TestRun < ApplicationRecord
   has_many :step_statuses, -> {includes :step }
   has_many :steps, through: :step_statuses
 
+  def self.test_run_select_list
+    @test_run_list = select("id, id key, id value, datetime(started_at,'unixepoch') text")
+    .order("key desc")
+    .all
+  end
+
+  def self.program_test_run_select_list(program_id)
+    @test_run_list = select("id, id key, id value, datetime(started_at,'unixepoch') text")
+    .where("program_id = #{program_id}")
+    .order("key desc")
+    .all
+  end
+  
   def program_info
     {
       run_time: run_time,
@@ -95,7 +108,7 @@ class TestRun < ApplicationRecord
   def calc_times(steps_array, step_info)
     temp = {}
     steps_array.each_with_object(temp) {|s, memo| memo[s.status] = s.started_at }
-    temp["pending"] ? step_info[:pending_time] = (temp["soaking"] - temp["pending"]) : step_info[:pending_time] = 0
+    temp["pending"] && temp["soaking"] ? step_info[:pending_time] = (temp["soaking"] - temp["pending"]) : step_info[:pending_time] = 0
     temp["completed"] ? step_info[:soaking_time] = temp["completed"] - temp["soaking"] : step_info[:soaking_time] = 0
     temp["pending"] ? step_info[:run_time] = step_info[:pending_time] + step_info[:soaking_time] : step_info[:run_time] = step_info[:soaking_time]
   end
@@ -126,8 +139,4 @@ class TestRun < ApplicationRecord
     step_statuses.order(:id).last.started_at
   end
 
-  def self.test_run_select_list
-    select("id key, id value, datetime(started_at,'unixepoch') text")
-    .order("id desc")
-  end
 end

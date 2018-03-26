@@ -9,6 +9,7 @@ import StepInfo from './StepInfo.js'
 import Timeline from './Timeline.jsx'
 import GraphicWindow from './GraphicWindow.jsx'
 import LiveModeTimer from './LiveModeTimer.jsx'
+import ProgramDropdown from './ProgramDropdown.js'
 
 
 class App extends Component {
@@ -17,6 +18,7 @@ class App extends Component {
 
     this.state = {
       testRunId: null,
+      programId: null,
       selectedStepId: null,
       selectedComponent: null,
       stepInfo: {
@@ -46,6 +48,16 @@ class App extends Component {
     this.setState({ testRunId: value })
   };
 
+  setProgram = (value) => {
+    console.log(`Set Program: ${value}`)
+    this.setState({ 
+      programId: value,
+      testRunId: null,
+      selectedComponent: null,
+      selectedStepId: null
+    })
+  };
+
   setSelectedComponent = (rowIndex) => {
     console.log(`setSelectedComponent: ${rowIndex}`)
     this.setState({ selectedComponent: rowIndex })
@@ -56,7 +68,7 @@ class App extends Component {
   }
 
   render() {
-    const { testRunId, selectedStepId, component_list_info, selectedComponent } = this.state;
+    const { programId, testRunId, selectedStepId, component_list_info, selectedComponent } = this.state;
     return (
       <div className="App">
         <header className="App-header">
@@ -80,7 +92,11 @@ class App extends Component {
             <Grid.Row>
               <Grid.Column width={4}>
                   <Segment>
-                    <TestRunDropdown handleTestRunSelect={this.setTestRun} />
+                    <ProgramDropdown handleProgramSelect={this.setProgram} />
+                    <TestRunDropdown 
+                      handleTestRunSelect={this.setTestRun}
+                      programId={programId}
+                    />
                   </Segment>
                   <Segment>
                     <LiveModeTimer
@@ -122,8 +138,9 @@ class App extends Component {
               <Grid.Column>
                 <Segment>
                   <GraphicWindow 
-                  components={component_list_info}
-                  selectedComponent={selectedComponent}
+                    components={component_list_info}
+                    selectedComponent={selectedComponent}
+                    testRunId={testRunId}
                   />
                 </Segment>
               </Grid.Column>

@@ -51,6 +51,9 @@ class Timeline extends Component {
     if (this.props.testRunId !== nextProps.testRunId || this.props.tickCounter !== nextProps.tickCounter) {
       nextProps.testRunId && this.getInfo(`timeline/${nextProps.testRunId}`);
     };
+    if (nextProps.testRunId === null) {
+      this.setState({stepStatuses: [["Test Run ID", "Select a test run", 0, 3000, null ]]})
+    }
   }
 
   componentWillUnmount() {

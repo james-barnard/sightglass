@@ -18,7 +18,7 @@ describe ComponentController do
 
   it "responds to a GET request" do
     get :component_states, :format => :JSON, :params => {:id => 1}
-    expect(JSON.parse(response.body)).to eq (states)
+    expect(JSON.parse(response.body)).to eq(states)
   end
 
   describe "GET #component_states" do
@@ -27,4 +27,6 @@ describe ComponentController do
       expect(response).to have_http_status(:success)
     end
   end
+
+  
 end

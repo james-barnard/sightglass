@@ -17,35 +17,44 @@ RSpec.describe TestRun, type: :model do
                                :status=>"completed"}]] }
 
   it "knows how long the program took to run" do
-    expect(test_run1.run_time).to eq (elapsed_time)
+    expect(test_run1.run_time).to eq(elapsed_time)
   end
 
   it "knows how long the program should take to run" do
-    expect(test_run1.program_time).to eq (2)
+    expect(test_run1.program_time).to eq(2)
   end
 
   it "knows how many steps it has" do
-    expect(test_run1.step_count).to eq (2)
+    expect(test_run1.step_count).to eq(2)
   end
 
   it "knows which step it is working on" do
-    expect(test_run1.current_step).to eq (2)
+    expect(test_run1.current_step).to eq(2)
   end
 
   it "knows the status of the step in progress" do
-    expect(test_run1.step_statuses.last.status).to eq ("completed")
+    expect(test_run1.step_statuses.last.status).to eq("completed")
   end
 
   describe "#timeline" do
     context "for a completed program" do
       xit "returns an array with the step status information for each step in the program"
     end
-
-    context "for a future program" do
-      it "returns an array with the information for each step"
-    end
     
     it "includes the step info in a hash"
   end
 
+  describe '#test_run_select_list' do
+    it 'gets a list of all the test runs with a given program id from the database' do
+      expect(TestRun.test_run_select_list.first).to be_a_kind_of(TestRun)
+      expect(TestRun.test_run_select_list.to_a.count).to eq(3)
+    end
+  end
+
+  describe '#program_test_run_select_list' do
+    it 'gets only the test runs for the selected program' do
+      expect(TestRun.program_test_run_select_list(3).first.key).to eq(3)
+      expect(TestRun.program_test_run_select_list(3).to_a.count).to eq(1)
+    end
+  end
 end

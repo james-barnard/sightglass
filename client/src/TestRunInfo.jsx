@@ -23,6 +23,9 @@ class TestRunInfo extends Component {
     if (this.props.testRunId !== nextProps.testRunId || this.props.tickCounter !== nextProps.tickCounter) {
       nextProps.testRunId && this.getInfo(`test_run/${nextProps.testRunId}`)
     }
+    if (nextProps.testRunId === null) {
+      this.setState({ test_run: "test data" })
+    }
   }
 
   render() {

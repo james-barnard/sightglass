@@ -8,24 +8,25 @@ class ComponentList extends Component {
     super(props)
     
     this.state = {
-      components: [{"id":1,"test_cell_id":1,"name":"Brew Vacuum"},
-                  {"id":2,"test_cell_id":1,"name":"Brew In"},
-                  {"id":3,"test_cell_id":1,"name":"Brew Out"},
-                  {"id":4,"test_cell_id":1,"name":"Filter purge Out"},
-                  {"id":5,"test_cell_id":1,"name":"Bright In"},
-                  {"id":6,"test_cell_id":1,"name":"Bright Out"},
-                  {"id":7,"test_cell_id":1,"name":"Decant"},
-                  {"id":8,"test_cell_id":1,"name":"Filter H2O"},
-                  {"id":9,"test_cell_id":1,"name":"Filter Backflush"},
-                  {"id":10,"test_cell_id":1,"name":"Brew H2O"},
-                  {"id":11,"test_cell_id":1,"name":"Brew N2"},
-                  {"id":12,"test_cell_id":1,"name":"Process H2O"},
-                  {"id":13,"test_cell_id":1,"name":"Condition N2"},
-                  {"id":14,"test_cell_id":1,"name":"Burp"}],
+      components: this.defaults,
       activeRow: null
     }
   };
 
+defaults = [{"id":1,"test_cell_id":1,"name":"Brew Vacuum"},
+                      {"id":2,"test_cell_id":1,"name":"Brew In"},
+                      {"id":3,"test_cell_id":1,"name":"Brew Out"},
+                      {"id":4,"test_cell_id":1,"name":"Filter purge Out"},
+                      {"id":5,"test_cell_id":1,"name":"Bright In"},
+                      {"id":6,"test_cell_id":1,"name":"Bright Out"},
+                      {"id":7,"test_cell_id":1,"name":"Decant"},
+                      {"id":8,"test_cell_id":1,"name":"Filter H2O"},
+                      {"id":9,"test_cell_id":1,"name":"Filter Backflush"},
+                      {"id":10,"test_cell_id":1,"name":"Brew H2O"},
+                      {"id":11,"test_cell_id":1,"name":"Brew N2"},
+                      {"id":12,"test_cell_id":1,"name":"Process H2O"},
+                      {"id":13,"test_cell_id":1,"name":"Condition N2"},
+                      {"id":14,"test_cell_id":1,"name":"Burp"}];
 
   getComponentInfo = (resource, stepId) => {
     if (stepId !== null)
@@ -42,22 +43,8 @@ class ComponentList extends Component {
       this.getComponentInfo(`step/${nextProps.selectedStepId}/component_states`, nextProps.selectedStepId)
     }
     if (this.props.testRunId !== nextProps.testRunId) {
-      this.setState({
-        components: [{"id":1,"test_cell_id":1,"name":"Brew Vacuum"},
-                  {"id":2,"test_cell_id":1,"name":"Brew In"},
-                  {"id":3,"test_cell_id":1,"name":"Brew Out"},
-                  {"id":4,"test_cell_id":1,"name":"Filter purge Out"},
-                  {"id":5,"test_cell_id":1,"name":"Bright In"},
-                  {"id":6,"test_cell_id":1,"name":"Bright Out"},
-                  {"id":7,"test_cell_id":1,"name":"Decant"},
-                  {"id":8,"test_cell_id":1,"name":"Filter H2O"},
-                  {"id":9,"test_cell_id":1,"name":"Filter Backflush"},
-                  {"id":10,"test_cell_id":1,"name":"Brew H2O"},
-                  {"id":11,"test_cell_id":1,"name":"Brew N2"},
-                  {"id":12,"test_cell_id":1,"name":"Process H2O"},
-                  {"id":13,"test_cell_id":1,"name":"Condition N2"},
-                  {"id":14,"test_cell_id":1,"name":"Burp"}]
-      })
+      this.setState({ components: this.defaults, activeRow: null })
+      this.props.handleComponentInfo(this.defaults)
     }
   }
   handleClick = (e) => {
