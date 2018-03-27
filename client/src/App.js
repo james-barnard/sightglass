@@ -21,18 +21,20 @@ class App extends Component {
       programId: null,
       selectedStepId: null,
       selectedComponent: null,
-      stepInfo: {
+      stepInfo: this.stepInfoDefault,
+      component_list_info: [],
+      tickCounter: 0
+    }
+  };
+
+  stepInfoDefault = {
         pending_time: 0,
         soaking_time: 0,
         run_time: 0,
         duration: 0,
         description: 0,
         status: ""
-      },
-      component_list_info: [],
-      tickCounter: 0
-    }
-  };
+      };
 
   setStepInfo = (step_id, step_info) => {
     console.log(`Set Step Id: ${step_id}, Step Info: ${step_info.description}`)

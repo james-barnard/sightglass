@@ -9,9 +9,11 @@ class Timeline extends Component {
     this.state = {
       render: false,
       stepInfo: [],
-      stepStatuses: [["Test Run ID", "Select a test run", 0, 3000, null ]]
+      stepStatuses: this.defaults
     };
   };
+
+  defaults = [["Test Run ID", "Select a test run", 0, 3000, null ]];
 
   componentDidMount() {
     this.setState({
@@ -50,9 +52,9 @@ class Timeline extends Component {
     this.removeTooltip
     if (this.props.testRunId !== nextProps.testRunId || this.props.tickCounter !== nextProps.tickCounter) {
       nextProps.testRunId && this.getInfo(`timeline/${nextProps.testRunId}`);
-    };
-    if (nextProps.testRunId === null) {
-      this.setState({stepStatuses: [["Test Run ID", "Select a test run", 0, 3000, null ]]})
+      this.setState({stepStatuses: this.defaults, stepInfo: []},
+        this.props.handleStepSelect(null, this.state.stepInfo)
+      )
     }
   }
 

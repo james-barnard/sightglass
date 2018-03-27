@@ -28,7 +28,8 @@ class TestRunDropdown extends Component {
       console.log(`this.props.programId for test run dropwdown: ${this.props.programId}`)    
       console.log(`nextProps.programId for test run dropwdown: ${nextProps.programId}`)
     if (nextProps.programId !== this.props.programId)
-      nextProps.programId && this.getInfo(`program_test_runs/${nextProps.programId}`)
+      nextProps.programId && this.getInfo(`program_test_runs/${nextProps.programId}`);
+      
   }
 
   render() {
