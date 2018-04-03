@@ -42,24 +42,17 @@ class Timeline extends Component {
   removeTooltip() {
     var toolTips = document.getElementsByClassName("google-visualization-tooltip")
     for(var i=0; i<=toolTips.length; i++) {
-      console.log(`there were ${toolTips.length} tooltips`);
       toolTips[i].remove()
-      console.log(`there are now ${document.getElementsByClassName('google-visualization-tooltip').length} tooltips.`);
     }
   }
 
   componentWillReceiveProps(nextProps) {
-    this.removeTooltip
     if (this.props.testRunId !== nextProps.testRunId || this.props.tickCounter !== nextProps.tickCounter) {
       nextProps.testRunId && this.getInfo(`timeline/${nextProps.testRunId}`);
       this.setState({stepStatuses: this.defaults, stepInfo: []},
         this.props.handleStepSelect(null, this.state.stepInfo)
       )
     }
-  }
-
-  componentWillUnmount() {
-    console.log('google chart unmounting')
   }
 
   render() {

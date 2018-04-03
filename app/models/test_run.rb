@@ -4,13 +4,13 @@ class TestRun < ApplicationRecord
   has_many :steps, through: :step_statuses
 
   def self.test_run_select_list
-    @test_run_list = select("id, id key, id value, datetime(started_at,'unixepoch') text")
+    @test_run_list = select("id, id key, id value, program_id, datetime(started_at,'unixepoch') text")
     .order("key desc")
     .all
   end
 
   def self.program_test_run_select_list(program_id)
-    @test_run_list = select("id, id key, id value, datetime(started_at,'unixepoch') text")
+    @test_run_list = select("id, id key, id value, program_id, datetime(started_at,'unixepoch') text")
     .where("program_id = #{program_id}")
     .order("key desc")
     .all
