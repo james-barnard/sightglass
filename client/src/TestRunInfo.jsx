@@ -13,9 +13,9 @@ class TestRunInfo extends Component {
   
   getInfo = (id) => {
     Client.search(id, (test_run) => {
-      this.setState({
-        test_run: test_run
-      });
+      this.setState({ test_run: test_run },
+        this.props.passFinalStatus(test_run.status_final)
+      );
     });
   };
   
@@ -26,6 +26,10 @@ class TestRunInfo extends Component {
     if (nextProps.testRunId === null) {
       this.setState({ test_run: "test data" })
     }
+  }
+
+  componentDidMount() {
+    this.props.testRunId && this.getInfo(`test_run/${this.props.testRunId}`);
   }
 
   render() {

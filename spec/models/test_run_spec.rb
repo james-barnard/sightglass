@@ -37,11 +37,7 @@ RSpec.describe TestRun, type: :model do
   end
 
   describe "#timeline" do
-    context "for a completed program" do
-      xit "returns an array with the step status information for each step in the program"
-    end
-    
-    it "includes the step info in a hash"
+    xit "returns an array with the step status information for each step in the program"
   end
 
   describe '#test_run_select_list' do

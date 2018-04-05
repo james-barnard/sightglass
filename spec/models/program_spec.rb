@@ -10,6 +10,20 @@ PROGRAM_SELECT_LIST_KEYS = %w[id key text value]
   let(:sample_hash) { {"id" => 1, "key" => 1, "value" => 1, "text" => "sample text"} }
   let(:sample_text) { "1 | sample text" }
 
+  let(:program1_timeline) { [["1", "25: step description", 0, 1000, "1",
+                              {:duration=>1, :description=>"step description",
+                               :status=>"N/A", :pending_time=>"N/A",
+                               :soaking_time=>"N/A", :run_time=>1}
+                            ],
+                            ["1", "26: step description", 1000, 2000, "2",
+                              {:duration=>1, :description=>"step description",
+                               :status=>"N/A",:pending_time=>"N/A", 
+                               :soaking_time=>"N/A", :run_time=>1}
+                            ]]
+                         }
+
+  let(:program1_program_info) {{ "program_time": 2, "step_count": 2 }}
+
   describe '#convert_object' do
     it 'converts a Program object into hashes' do
       expect(Program.convert_object(Program.first)).to be_a_kind_of(Hash)
@@ -30,6 +44,20 @@ PROGRAM_SELECT_LIST_KEYS = %w[id key text value]
   
     it 'has results with the correct keys' do
       expect(Program.program_select_list.first.keys.sort).to eq(PROGRAM_SELECT_LIST_KEYS)
+    end
+  end
+
+  describe '#program_timeline' do
+    it 'returns an array of all the steps in the program' do
+      expect(Program.find(1).program_timeline).to eq(program1_timeline)
+    end
+
+    xit 'includes a step info object for each step'
+  end
+
+  describe '#program_program_info' do
+    it 'returns an object with info about the program' do
+      expect(Program.find(1).program_program_info).to eq(program1_program_info)
     end
   end
 end

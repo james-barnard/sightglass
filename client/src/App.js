@@ -1,6 +1,6 @@
 import './App.css';
 import React, { Component } from 'react';
-import { Grid, Segment } from 'semantic-ui-react'
+import { Button, Grid, Segment } from 'semantic-ui-react'
 import TestRunInfo from './TestRunInfo.jsx'
 import ComponentList from './ComponentList.jsx'
 import ProgramInfo from './Program_Info.js'
@@ -23,7 +23,10 @@ class App extends Component {
       selectedComponent: null,
       stepInfo: this.stepInfoDefault,
       component_list_info: [],
-      tickCounter: 0
+      tickCounter: 0,
+      reset: false,
+      filter: false,
+      finalStatus: null
     }
   };
 
@@ -36,8 +39,11 @@ class App extends Component {
         status: ""
       };
 
+  testValueChange = () => {
+    this.setState({programId: 100})
+  };
+
   setStepInfo = (step_id, step_info) => {
-    console.log(`Set Step Id: ${step_id}, Step Info: ${step_info.description}`)
     this.setState({ selectedStepId: step_id, stepInfo: step_info })
   };
 
@@ -45,32 +51,92 @@ class App extends Component {
     this.setState({ component_list_info: component_info})
   };
 
-  setTestRun = (value) => {
-    console.log(`Set Test Run: ${value}`)
-    this.setState({ testRunId: value })
+  setTestRun = (value, program_id) => {
+    if (program_id === 0) {
+       this.setState({testRunId: value, filter: false})
+    } else {
+      this.setState({testRunId: value, programId: program_id, filter: false})
+    }
   };
 
   setProgram = (value) => {
-    console.log(`Set Program: ${value}`)
     this.setState({ 
       programId: value,
       testRunId: null,
       selectedComponent: null,
-      selectedStepId: null
+      selectedStepId: null,
+      filter: true
     })
   };
 
   setSelectedComponent = (rowIndex) => {
-    console.log(`setSelectedComponent: ${rowIndex}`)
     this.setState({ selectedComponent: rowIndex })
+  }
+
+  handleFinalStatus = (finalStatus) => {
+    this.setState({finalStatus: finalStatus})
   }
 
   UpdateTick = (counter) => {
     this.setState({ tickCounter: counter })
   }
 
+  resetButton = () => {
+    this.setState({
+      testRunId: null,
+      programId: null,
+      selectedStepId: null,
+      selectedComponent: null,
+      stepInfo: this.stepInfoDefault,
+      component_list_info: [],
+      tickCounter: 0,
+      reset: true,
+      filter: false,
+      finalStatus: null
+    }, () => this.setState({reset: false})
+    )
+  }
+
+  renderLiveModeTimer() {
+    if (this.state.testRunId && (this.state.finalStatus !== "done")) {
+      return (
+        <Segment>
+          <LiveModeTimer
+            handleUpdateTick={this.UpdateTick}
+          />
+        </Segment>
+      );
+    } else {
+      return null;
+    }
+  }
+
+  renderTestRunInfo() {
+    if (this.state.testRunId) {
+      return (
+        <Segment>
+          <TestRunInfo
+            testRunId={this.state.testRunId}
+            tickCounter={this.state.tickCounter}
+            passFinalStatus={this.handleFinalStatus}
+          />
+        </Segment>
+      );
+    } else {
+      return null;
+    }
+  }
+
+
   render() {
-    const { programId, testRunId, selectedStepId, component_list_info, selectedComponent } = this.state;
+    const { programId,
+            testRunId,
+            selectedStepId,
+            component_list_info,
+            selectedComponent,
+            reset,
+            filter
+          } = this.state;
     return (
       <div className="App">
         <header className="App-header">
@@ -78,11 +144,12 @@ class App extends Component {
         <h1 className="App-title">Welcome to Nitrobrew - Sightglass</h1>
         </header>
         <Segment>
-          <Grid columns='equal'>
+          <Grid centered>
             <Grid.Row>
               <Grid.Column>
                 <Segment>
                   <Timeline
+                    programId={programId}
                     testRunId={testRunId}
                     selectedStepId={selectedStepId}
                     handleStepSelect={this.setStepInfo}
@@ -94,27 +161,30 @@ class App extends Component {
             <Grid.Row>
               <Grid.Column width={4}>
                   <Segment>
-                    <ProgramDropdown handleProgramSelect={this.setProgram} />
+                    <ProgramDropdown 
+                      handleProgramSelect={this.setProgram}
+                      testRunId={testRunId}
+                      programId={programId}
+                      reset={reset}
+                    />
                     <TestRunDropdown 
                       handleTestRunSelect={this.setTestRun}
                       programId={programId}
+                      reset={reset}
+                      filter={filter}
+                    />
+                    <Button
+                      content='Reset'
+                      onClick={this.resetButton}
                     />
                   </Segment>
-                  <Segment>
-                    <LiveModeTimer
-                      handleUpdateTick={this.UpdateTick}
-                    />
-                  </Segment>
-                  <Segment>
-                    <TestRunInfo
-                      testRunId={testRunId}
-                      tickCounter={this.state.tickCounter}
-                    />
-                  </Segment>
+                  {this.renderLiveModeTimer()}
+                  {this.renderTestRunInfo()}
               </Grid.Column>
               <Grid.Column width={4}>
                 <Segment>
                   <ProgramInfo
+                    programId={programId}
                     testRunId={testRunId}
                     tickCounter={this.state.tickCounter}
                   />
@@ -137,7 +207,7 @@ class App extends Component {
                 />
                 </Segment>
               </Grid.Column>
-              <Grid.Column>
+              <Grid.Column width={3}>
                 <Segment>
                   <GraphicWindow 
                     components={component_list_info}

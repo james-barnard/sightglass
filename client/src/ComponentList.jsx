@@ -70,8 +70,8 @@ defaults = [{"id":1,"test_cell_id":1,"name":"Brew Vacuum"},
     return(
       <div>
         <h4>Component List</h4>
-        <Table compact selectable>
-          <Table.Header>
+        <Table small selectable>
+          <Table.Header compact >
             <Table.Row>
               <Table.HeaderCell>ID</Table.HeaderCell>
               <Table.HeaderCell>Name</Table.HeaderCell>

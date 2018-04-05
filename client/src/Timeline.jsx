@@ -9,7 +9,7 @@ class Timeline extends Component {
     this.state = {
       render: false,
       stepInfo: [],
-      stepStatuses: this.defaults
+      steps: this.defaults
     };
   };
 
@@ -29,7 +29,7 @@ class Timeline extends Component {
 
   processArray = (steps) => {
     const step_info = steps.map(a => a.splice(5, 1)[0]);
-    this.setState( {stepStatuses: steps, stepInfo: step_info});
+    this.setState( {steps: steps, stepInfo: step_info});
   }
 
   passStepInfo = (step_id, step_info) => {
@@ -49,9 +49,15 @@ class Timeline extends Component {
   componentWillReceiveProps(nextProps) {
     if (this.props.testRunId !== nextProps.testRunId || this.props.tickCounter !== nextProps.tickCounter) {
       nextProps.testRunId && this.getInfo(`timeline/${nextProps.testRunId}`);
-      this.setState({stepStatuses: this.defaults, stepInfo: []},
+      this.setState({steps: this.defaults, stepInfo: []},
         this.props.handleStepSelect(null, this.state.stepInfo)
       )
+    }
+    if (nextProps.programId && nextProps.testRunId === null) {
+      this.getInfo(`program/timeline/${nextProps.programId}`)
+    }
+    if (nextProps.programId === null) {
+      this.setState({steps: this.defaults})
     }
   }
 
@@ -69,7 +75,7 @@ class Timeline extends Component {
           {type: 'number'},
           {role: 'tooltip', type: 'string'}
         ]}
-        rows={this.state.stepStatuses}
+        rows={this.state.steps}
         allowEmptyRows={true}
         width="100%"
         height="5 em"
