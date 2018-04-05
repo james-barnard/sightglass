@@ -31,11 +31,11 @@ class App extends Component {
   };
 
   stepInfoDefault = {
-        pending_time: 0,
-        soaking_time: 0,
-        run_time: 0,
-        duration: 0,
-        description: 0,
+        pending_time: "",
+        soaking_time: "",
+        run_time: "",
+        duration: "",
+        description: "",
         status: ""
       };
 

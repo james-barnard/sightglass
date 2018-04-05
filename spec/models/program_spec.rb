@@ -11,18 +11,18 @@ PROGRAM_SELECT_LIST_KEYS = %w[id key text value]
   let(:sample_text) { "1 | sample text" }
 
   let(:program1_timeline) { [["1", "25: step description", 0, 1000, "1",
-                              {:duration=>1, :description=>"step description",
-                               :status=>"N/A", :pending_time=>"N/A",
-                               :soaking_time=>"N/A", :run_time=>1}
+                              {:duration=>"00:01", :description=>"step description",
+                               :status=>"", :pending_time=>"",
+                               :soaking_time=>"", :run_time=>"00:01"}
                             ],
                             ["1", "26: step description", 1000, 2000, "2",
-                              {:duration=>1, :description=>"step description",
-                               :status=>"N/A",:pending_time=>"N/A", 
-                               :soaking_time=>"N/A", :run_time=>1}
+                              {:duration=>"00:01", :description=>"step description",
+                               :status=>"",:pending_time=>"", 
+                               :soaking_time=>"", :run_time=>"00:01"}
                             ]]
                          }
 
-  let(:program1_program_info) {{ "program_time": 2, "step_count": 2 }}
+  let(:program1_program_info) {{ "program_time": "00:02", "step_count": 2, "program_purpose": "clean" }}
 
   describe '#convert_object' do
     it 'converts a Program object into hashes' do

@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe TestRunController do
-  PROGRAM_INFO_KEYS = %w[run_time program_time step_count current_step status]
+  PROGRAM_INFO_KEYS = %w[run_time program_time step_count current_step status purpose]
   STEP_INFO_KEYS = %w[pending_time soaking_time run_time duration description status]
 
   before(:each) do

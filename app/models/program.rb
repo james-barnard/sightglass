@@ -34,8 +34,9 @@ class Program < ApplicationRecord
 
   def program_program_info
     {
-      "program_time": program_time,
-      "step_count": program_step_count
+      "program_time": format_time(program_time),
+      "step_count": program_step_count,
+      "program_purpose": purpose
     }
   end
 
@@ -52,17 +53,21 @@ class Program < ApplicationRecord
 
   def build_program_step_info(step)
     program_step_info = {}
-    program_step_info[:duration] = step.duration
+    program_step_info[:duration] = format_time(step.duration)
     program_step_info[:description] = step.description
-    program_step_info[:status] = "N/A"
+    program_step_info[:status] = ""
     calc_program_times(step, program_step_info)
     program_step_info
   end
 
   def calc_program_times(step, step_info)
-    step_info[:pending_time] = "N/A"
-    step_info[:soaking_time] = "N/A"
+    step_info[:pending_time] = ""
+    step_info[:soaking_time] = ""
     step_info[:run_time] = step_info[:duration]
+  end
+
+  def format_time(seconds)
+    seconds > 3600 ? Time.at(seconds).utc.strftime("%H:%M:%S") : Time.at(seconds).utc.strftime("%M:%S")
   end
 
   def program_time

@@ -18,11 +18,12 @@ class TestRun < ApplicationRecord
   
   def program_info
     {
-      run_time: run_time,
-      program_time: program_time,
+      run_time: format_time(run_time),
+      program_time: format_time(program_time),
       step_count: step_count,
       current_step: current_step,
-      status: status
+      status: status,
+      purpose: program.purpose
     }
   end
 
@@ -94,6 +95,11 @@ class TestRun < ApplicationRecord
     step_info = {}
     calc_times(step_status, step_info)
     step_info[:duration] = step_status.first.step.duration
+    
+    step_info.each do |k,v|
+      step_info[k] = format_time(v)
+    end
+    
     step_info[:description] = step_status.first.step.description
     step_info[:status] = step_status.last.status
     step_info
@@ -111,6 +117,10 @@ class TestRun < ApplicationRecord
     temp["pending"] && temp["soaking"] ? step_info[:pending_time] = (temp["soaking"] - temp["pending"]) : step_info[:pending_time] = 0
     temp["completed"] ? step_info[:soaking_time] = temp["completed"] - temp["soaking"] : step_info[:soaking_time] = 0
     temp["pending"] ? step_info[:run_time] = step_info[:pending_time] + step_info[:soaking_time] : step_info[:run_time] = step_info[:soaking_time]
+  end
+
+  def format_time(seconds)
+    seconds > 3600 ? Time.at(seconds).utc.strftime("%H:%M:%S") : Time.at(seconds).utc.strftime("%M:%S")
   end
 
   def run_time
