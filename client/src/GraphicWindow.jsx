@@ -40,7 +40,6 @@ class GraphicWindow extends Component {
       <div id="machine_box">
         <Image src={ all_grey } id='machine'/>
         { components.map(component => this.whichPic(component)) }
-        
       </div>
     );
   }
