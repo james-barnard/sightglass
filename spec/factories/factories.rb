@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :test_run do
     id 1
-    # program
+    program_id 1
     name "Test Run Name"
     started_at Time.now
     completed_at nil
@@ -17,7 +17,7 @@ FactoryBot.define do
   end
 
   factory :program do
-    sequence(:id) { |n| n }
+    id 1
     purpose "clean"
   end
 

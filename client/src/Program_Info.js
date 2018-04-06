@@ -26,6 +26,19 @@ class ProgramInfo extends Component {
     if (this.props.testRunId !== nextProps.testRunId || this.props.tickCounter !== nextProps.tickCounter) {
       nextProps.testRunId && this.getInfo(`program_info/${nextProps.testRunId}`)
     }
+    if (nextProps.programId && nextProps.testRunId === null) {
+      this.getInfo(`program_program_info/${nextProps.programId}`)
+    }
+    if (nextProps.testRunId === null) {
+      this.setState({
+        program_info: "---",
+        run_time: "---",
+        program_time: "---",
+        step_count: "---",
+        current_step: "---",
+        status: "---"
+      })
+    }
   }
 
   render() {

@@ -21,19 +21,19 @@ class StepInfo extends Component {
             </Table.Row>
             <Table.Row>
               <Table.Cell textAlign='right'>Programmed Duration:</Table.Cell>
-              <Table.Cell>{stepInfo.duration} seconds</Table.Cell>
+              <Table.Cell>{stepInfo.duration}</Table.Cell>
             </Table.Row>
             <Table.Row>
               <Table.Cell textAlign='right'>Run Time:</Table.Cell>
-              <Table.Cell>{stepInfo.run_time} seconds</Table.Cell>
+              <Table.Cell>{stepInfo.run_time}</Table.Cell>
             </Table.Row>
             <Table.Row>
               <Table.Cell textAlign='right'>Pending Time:</Table.Cell>
-              <Table.Cell>{stepInfo.pending_time} seconds</Table.Cell>
+              <Table.Cell>{stepInfo.pending_time}</Table.Cell>
             </Table.Row>
             <Table.Row>
               <Table.Cell textAlign='right'>Soaking Time:</Table.Cell>
-              <Table.Cell>{stepInfo.soaking_time} seconds</Table.Cell>
+              <Table.Cell>{stepInfo.soaking_time}</Table.Cell>
             </Table.Row>
           </Table.Body>
         </Table>

@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe TestRunController do
-  PROGRAM_INFO_KEYS = %w[run_time program_time step_count current_step status]
+  PROGRAM_INFO_KEYS = %w[run_time program_time step_count current_step status purpose]
   STEP_INFO_KEYS = %w[pending_time soaking_time run_time duration description status]
 
   before(:each) do
@@ -18,7 +18,7 @@ describe TestRunController do
     expect(response.content_type).to eq("application/json")
   end
 
-  it "knows its program information" do
+  it "returns its program information" do
     get :program_info, :format => :JSON, :params => {:id => 1}
     expect(JSON.parse(response.body).keys.sort).to eq(PROGRAM_INFO_KEYS.sort)
   end

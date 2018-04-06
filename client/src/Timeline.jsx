@@ -9,9 +9,11 @@ class Timeline extends Component {
     this.state = {
       render: false,
       stepInfo: [],
-      stepStatuses: [["Test Run ID", "Select a test run", 0, 3000, null ]]
+      steps: this.defaults
     };
   };
+
+  defaults = [["Test Run ID", "Select a test run", 0, 3000, null ]];
 
   componentDidMount() {
     this.setState({
@@ -27,7 +29,7 @@ class Timeline extends Component {
 
   processArray = (steps) => {
     const step_info = steps.map(a => a.splice(5, 1)[0]);
-    this.setState( {stepStatuses: steps, stepInfo: step_info});
+    this.setState( {steps: steps, stepInfo: step_info});
   }
 
   passStepInfo = (step_id, step_info) => {
@@ -40,20 +42,23 @@ class Timeline extends Component {
   removeTooltip() {
     var toolTips = document.getElementsByClassName("google-visualization-tooltip")
     for(var i=0; i<=toolTips.length; i++) {
-      console.log(`there were ${toolTips.length} tooltips`);
       toolTips[i].remove()
-      console.log(`there are now ${document.getElementsByClassName('google-visualization-tooltip').length} tooltips.`);
     }
   }
 
   componentWillReceiveProps(nextProps) {
     if (this.props.testRunId !== nextProps.testRunId || this.props.tickCounter !== nextProps.tickCounter) {
       nextProps.testRunId && this.getInfo(`timeline/${nextProps.testRunId}`);
-    };
-  }
-
-  componentWillUnmount() {
-    console.log('google chart unmounting')
+      this.setState({steps: this.defaults, stepInfo: []},
+        this.props.handleStepSelect(null, this.state.stepInfo)
+      )
+    }
+    if (nextProps.programId && nextProps.testRunId === null) {
+      this.getInfo(`program/timeline/${nextProps.programId}`)
+    }
+    if (nextProps.programId === null) {
+      this.setState({steps: this.defaults})
+    }
   }
 
   render() {
@@ -70,7 +75,7 @@ class Timeline extends Component {
           {type: 'number'},
           {role: 'tooltip', type: 'string'}
         ]}
-        rows={this.state.stepStatuses}
+        rows={this.state.steps}
         allowEmptyRows={true}
         width="100%"
         height="5 em"
