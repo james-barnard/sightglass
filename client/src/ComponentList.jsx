@@ -8,11 +8,16 @@ class ComponentList extends Component {
     super(props)
     
     this.state = {
+<<<<<<< HEAD
       components: this.defaults,
+=======
+      components: [],
+>>>>>>> master
       activeRow: null
     }
   };
 
+<<<<<<< HEAD
 defaults = [{"id":1,"test_cell_id":1,"name":"Brew Vacuum"},
                       {"id":2,"test_cell_id":1,"name":"Brew In"},
                       {"id":3,"test_cell_id":1,"name":"Brew Out"},
@@ -27,6 +32,11 @@ defaults = [{"id":1,"test_cell_id":1,"name":"Brew Vacuum"},
                       {"id":12,"test_cell_id":1,"name":"Process H2O"},
                       {"id":13,"test_cell_id":1,"name":"Condition N2"},
                       {"id":14,"test_cell_id":1,"name":"Burp"}];
+=======
+  componentDidMount() {
+    this.getComponentInfo('components/')
+  }
+>>>>>>> master
 
   getComponentInfo = (resource, stepId) => {
     if (stepId !== null)
@@ -43,10 +53,10 @@ defaults = [{"id":1,"test_cell_id":1,"name":"Brew Vacuum"},
       this.getComponentInfo(`step/${nextProps.selectedStepId}/component_states`, nextProps.selectedStepId)
     }
     if (this.props.testRunId !== nextProps.testRunId) {
-      this.setState({ components: this.defaults, activeRow: null })
-      this.props.handleComponentInfo(this.defaults)
+      this.getComponentInfo('components/')
     }
   }
+  
   handleClick = (e) => {
     e.currentTarget.rowIndex && this.props.handleComponentSelect(e.currentTarget.rowIndex);
     this.setState({ activeRow: e.currentTarget.rowIndex })
