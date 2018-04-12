@@ -59,8 +59,8 @@ class ComponentList extends Component {
     return(
       <div>
         <h4>Component List</h4>
-        <Table small selectable>
-          <Table.Header compact >
+        <Table selectable>
+          <Table.Header >
             <Table.Row>
               <Table.HeaderCell>ID</Table.HeaderCell>
               <Table.HeaderCell>Name</Table.HeaderCell>

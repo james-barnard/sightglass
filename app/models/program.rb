@@ -21,13 +21,13 @@ class Program < ApplicationRecord
     steps.where("id <= #{step_id}").order("id desc")
   end
 
-  def program_timeline
-    ordered_steps = steps.order("sequence_number")
+  def program_timeline(starting_step = 0, starting_time = 0)
+    ordered_steps = steps.where("sequence_number > #{starting_step}").order("sequence_number")
     timeline = []
+    step_start_time ||= starting_time
     ordered_steps.each do |step|
-      @step_start_time ||= 0
-      timeline << fill_program_values(step, @step_start_time)
-      @step_start_time += step.duration
+      timeline << fill_program_values(step, step_start_time)
+      step_start_time += step.duration
     end
     timeline
   end

@@ -28,13 +28,13 @@ class TestRun < ApplicationRecord
   end
 
   def test_run_info
-    start_string = started_at
+    # todo is this necessary?  start_string = started_at
     {
       test_run_id: id,
       program_id: program.id,
       purpose: program.purpose,
       started_at: Time.at(started_at).strftime("%B %e, %Y, %I:%M %p"),
-      completed_at: Time.at(completed_at_time).strftime("%B %e, %Y, %I:%M %p"),
+      completed_at: completed_at_time,
       status_final: status
     }
   end
@@ -104,12 +104,16 @@ class TestRun < ApplicationRecord
   end
 
   def status
-    return "N/A" unless step_statuses.count > 0
+    return "" unless step_statuses.count > 0
     step_statuses.order(:id).last.status
   end
 
   def completed_at_time
-    step_statuses.order(:id).last.started_at
+    if step_statuses.exists?
+      Time.at(step_statuses.order(:id).last.started_at).strftime("%B %e, %Y, %I:%M %p")
+    else
+      ""
+    end
   end
 
 end

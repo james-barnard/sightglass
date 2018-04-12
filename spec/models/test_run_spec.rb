@@ -7,14 +7,14 @@ RSpec.describe TestRun, type: :model do
 
   let(:test_run1) { TestRun.find 1 }
   let(:elapsed_time) { 30 }
-  let(:test_run1_timeline) { [["1", "25: step description", 0, 30000, "1",
-                              {:pending_time=>30, :soaking_time=>0, :run_time=>30,
-                               :duration=>1, :description=>"step description",
+  let(:test_run1_timeline) { [["1", "36: step1 description", 0, 29000, "1",
+                              {:pending_time=>"00:29", :soaking_time=>"00:00", :run_time=>"00:29",
+                               :duration=>"00:01", :description=>"step1 description",
                                :status=>"completed"}],
-                              ["1", "26: step description", 0, 30000, "2",
-                              {:pending_time=>30, :soaking_time=>0, :run_time=>30,
-                               :duration=>1, :description=>"step description",
-                               :status=>"completed"}]] }
+                              ["1", "37: step2 description", 0, 30000, "2",
+                              {:pending_time=>"00:29", :soaking_time=>"00:00", :run_time=>"00:29",
+                               :duration=>"00:01", :description=>"step2 description",
+                               :status=>"done"}]] }
 
   it "knows how long the program took to run" do
     expect(test_run1.run_time).to eq(elapsed_time)
@@ -33,7 +33,7 @@ RSpec.describe TestRun, type: :model do
   end
 
   it "knows the status of the step in progress" do
-    expect(test_run1.step_statuses.last.status).to eq("completed")
+    expect(test_run1.step_statuses.last.status).to eq("done")
   end
 
   describe "#timeline" do
@@ -53,8 +53,9 @@ RSpec.describe TestRun, type: :model do
 
   describe '#program_test_run_select_list' do
     it 'gets only the test runs for the selected program' do
-      expect(TestRun.program_test_run_select_list(3).first.key).to eq(3)
+      expect(TestRun.program_test_run_select_list(3).first.key).to eq(5)
       expect(TestRun.program_test_run_select_list(3).to_a.count).to eq(1)
     end
   end
+end
 end

@@ -6,7 +6,7 @@ class LiveModeTimer extends Component {
     super(props);
 
     this.state = {
-      secondsLeft: 5,
+      secondsLeft: 1,
       liveMode: false,
       tickCounter: 0
     }
@@ -15,7 +15,7 @@ class LiveModeTimer extends Component {
   handleClick = () => {
     if (this.state.liveMode){
       clearInterval(this.refreshTimer);
-      this.setState({liveMode: false, secondsLeft: 5});
+      this.setState({liveMode: false, secondsLeft: 1});
     } else {
       this.setState({liveMode: true})
       this.refreshTimer = setInterval(
@@ -35,7 +35,7 @@ class LiveModeTimer extends Component {
         secondsLeft: prevState.secondsLeft -1
       }))
     } else if (this.state.secondsLeft <= 0) {
-      this.setState({secondsLeft: 5})
+      this.setState({secondsLeft: 1})
       this.increment()
     }
   }

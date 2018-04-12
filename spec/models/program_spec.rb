@@ -10,17 +10,28 @@ PROGRAM_SELECT_LIST_KEYS = %w[id key text value]
   let(:sample_hash) { {"id" => 1, "key" => 1, "value" => 1, "text" => "sample text"} }
   let(:sample_text) { "1 | sample text" }
 
-  let(:program1_timeline) { [["1", "25: step description", 0, 1000, "1",
-                              {:duration=>"00:01", :description=>"step description",
+  let(:program1_timeline) { [["1", "29: step1 description", 0, 1000, "1",
+                              {:duration=>"00:01", :description=>"step1 description",
                                :status=>"", :pending_time=>"",
                                :soaking_time=>"", :run_time=>"00:01"}
                             ],
-                            ["1", "26: step description", 1000, 2000, "2",
-                              {:duration=>"00:01", :description=>"step description",
+                            ["1", "30: step2 description", 1000, 2000, "2",
+                              {:duration=>"00:01", :description=>"step2 description",
                                :status=>"",:pending_time=>"", 
                                :soaking_time=>"", :run_time=>"00:01"}
                             ]]
                          }
+
+  let(:program1_timeline_for_test_run) { [["1", "36: step1 description", 2000, 3000, "1",
+                                          {:duration=>"00:01", :description=>"step1 description",
+                                           :status=>"",:pending_time=>"", 
+                                           :soaking_time=>"", :run_time=>"00:01"}],
+                                           ["1", "37: step2 description", 3000, 4000, "2",
+                                          {:duration=>"00:01", :description=>"step2 description",
+                                           :status=>"",:pending_time=>"", 
+                                           :soaking_time=>"", :run_time=>"00:01"}]
+                                         ]
+                                        }
 
   let(:program1_program_info) {{ "program_time": "00:02", "step_count": 2, "program_purpose": "clean" }}
 
@@ -48,8 +59,16 @@ PROGRAM_SELECT_LIST_KEYS = %w[id key text value]
   end
 
   describe '#program_timeline' do
-    it 'returns an array of all the steps in the program' do
-      expect(Program.find(1).program_timeline).to eq(program1_timeline)
+    context 'starting at the beginning at the program' do
+      it 'returns an array of all the steps in the program' do
+        expect(Program.find(1).program_timeline).to eq(program1_timeline)
+      end
+    end
+
+    context 'starting in the middle of the program' do
+      it 'returns an array of all the steps in the program' do
+        expect(Program.find(1).program_timeline(31, 2)).to eq(program1_timeline_for_test_run)
+      end
     end
 
     xit 'includes a step info object for each step'
