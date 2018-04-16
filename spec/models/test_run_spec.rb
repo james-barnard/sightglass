@@ -7,14 +7,7 @@ RSpec.describe TestRun, type: :model do
 
   let(:test_run1) { TestRun.find 1 }
   let(:elapsed_time) { 30 }
-  let(:test_run1_timeline) { [["1", "36: step1 description", 0, 29000, "1",
-                              {:pending_time=>"00:29", :soaking_time=>"00:00", :run_time=>"00:29",
-                               :duration=>"00:01", :description=>"step1 description",
-                               :status=>"completed"}],
-                              ["1", "37: step2 description", 0, 30000, "2",
-                              {:pending_time=>"00:29", :soaking_time=>"00:00", :run_time=>"00:29",
-                               :duration=>"00:01", :description=>"step2 description",
-                               :status=>"done"}]] }
+  let(:timeline_keys) { [:pending_time, :soaking_time, :run_time, :duration, :description, :status] }
 
   it "knows how long the program took to run" do
     expect(test_run1.run_time).to eq(elapsed_time)
@@ -38,16 +31,23 @@ RSpec.describe TestRun, type: :model do
 
   describe "#timeline" do
     context "for a completed program" do
-      # todo: fix this spec so it is not dependant on running the whole suite
-      it "returns an array with the step status information for each step in the program" do
-        expect(test_run1.timeline).to eq(test_run1_timeline)
-      end
+      it "returns an array of arrays with the correct data types for the UI" do
+        test_run1.timeline.each do |item|
+          expect(item[0]).to be_a_kind_of(String)
+          expect(item[1]).to be_a_kind_of(String)
+          expect(item[2]).to be_a_kind_of(Integer)
+          expect(item[3]).to be_a_kind_of(Integer)
+          expect(item[4]).to be_a_kind_of(String)
+          expect(item[5]).to be_a_kind_of(Hash)
+          expect(item[5].keys.sort).to eq(timeline_keys.sort)
+        end
+      end 
     end
 
   describe '#test_run_select_list' do
     it 'gets a list of all the test runs with a given program id from the database' do
       expect(TestRun.test_run_select_list.first).to be_a_kind_of(TestRun)
-      expect(TestRun.test_run_select_list.to_a.count).to eq(3)
+      expect(TestRun.test_run_select_list.to_a.count).to eq(4)
     end
   end
 
