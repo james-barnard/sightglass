@@ -1,6 +1,6 @@
 import './App.css';
 import React, { Component } from 'react';
-import { Image } from 'semantic-ui-react'
+import { Image, Container, Segment } from 'semantic-ui-react'
 import all_grey from './images/Skinny_Grey_with_pumps.png'
 import nc_closed from './images/NC_Closed2.png'
 import nc_open from './images/NC_Open.png'
@@ -38,8 +38,10 @@ class GraphicWindow extends Component {
     const { components } = this.props
     return (
       <div id="machine_box">
-        <Image src={ all_grey } id='machine'/>
-        { components.map(component => this.whichPic(component)) }
+          <Container>
+            <Image src={ all_grey } id='machine' floated="right"/>
+            { components.map(component => this.whichPic(component)) }
+          </Container>
       </div>
     );
   }

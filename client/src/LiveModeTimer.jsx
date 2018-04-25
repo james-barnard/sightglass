@@ -57,7 +57,6 @@ class LiveModeTimer extends Component {
     return(
       <div onClick={this.handleClick} className={isActive}>
         <h4>{LiveModeText}</h4>
-        <span>{this.state.secondsLeft} seconds until refresh</span>
       </div>
     )
   }

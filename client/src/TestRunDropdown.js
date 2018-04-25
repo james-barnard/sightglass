@@ -63,7 +63,6 @@ class TestRunDropdown extends Component {
 
     return(
       <div>
-        <h4>Completed Test Runs</h4>
         {DropdownSearchSelection}
       </div>
     )

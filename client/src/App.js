@@ -1,6 +1,6 @@
 import './App.css';
 import React, { Component } from 'react';
-import { Button, Grid, Segment } from 'semantic-ui-react'
+import { Button, Grid, Segment, Menu, Container } from 'semantic-ui-react'
 import TestRunInfo from './TestRunInfo.jsx'
 import ComponentList from './ComponentList.jsx'
 import ProgramInfo from './Program_Info.js'
@@ -99,32 +99,34 @@ class App extends Component {
 
   renderLiveModeTimer() {
     if (this.state.testRunId && (this.state.finalStatus !== "done")) {
-      return (
-        <Segment>
-          <LiveModeTimer
-            handleUpdateTick={this.UpdateTick}
-          />
-        </Segment>
-      );
+    return (
+      <Menu.Item as={Button}>
+        <LiveModeTimer
+          handleUpdateTick={this.UpdateTick}
+        />
+      </Menu.Item>
+    );
     } else {
-      return null;
+      return (
+      <Menu.Item as={Button} disabled>
+        <LiveModeTimer
+          handleUpdateTick={this.UpdateTick}
+        />
+      </Menu.Item>
+    );
     }
   }
 
   renderTestRunInfo() {
-    if (this.state.testRunId) {
-      return (
-        <Segment>
-          <TestRunInfo
-            testRunId={this.state.testRunId}
-            tickCounter={this.state.tickCounter}
-            passFinalStatus={this.handleFinalStatus}
-          />
-        </Segment>
-      );
-    } else {
-      return null;
-    }
+    return (
+      <Segment>
+        <TestRunInfo
+          testRunId={this.state.testRunId}
+          tickCounter={this.state.tickCounter}
+          passFinalStatus={this.handleFinalStatus}
+        />
+      </Segment>
+    );
   }
 
 
@@ -139,28 +141,21 @@ class App extends Component {
           } = this.state;
     return (
       <div className="App">
-        <header className="App-header">
-        {/* <img src={logo} className="App-logo" alt="logo" /> */}
-        <h1 className="App-title">Welcome to Nitrobrew - Sightglass</h1>
-        </header>
-        <Segment>
-          <Grid centered>
+          <Grid>
             <Grid.Row>
               <Grid.Column>
-                <Segment>
-                  <Timeline
-                    programId={programId}
-                    testRunId={testRunId}
-                    selectedStepId={selectedStepId}
-                    handleStepSelect={this.setStepInfo}
-                    tickCounter={this.state.tickCounter}
-                  />
-                </Segment>
+                <Timeline
+                  programId={programId}
+                  testRunId={testRunId}
+                  selectedStepId={selectedStepId}
+                  handleStepSelect={this.setStepInfo}
+                  tickCounter={this.state.tickCounter}
+                />
               </Grid.Column>
             </Grid.Row>
-            <Grid.Row>
-              <Grid.Column width={4}>
-                  <Segment>
+            <Grid.Row centered stretched>
+              <Grid.Column width={3}>
+                <Segment>
                     <ProgramDropdown 
                       handleProgramSelect={this.setProgram}
                       testRunId={testRunId}
@@ -181,7 +176,7 @@ class App extends Component {
                   {this.renderLiveModeTimer()}
                   {this.renderTestRunInfo()}
               </Grid.Column>
-              <Grid.Column width={4}>
+              <Grid.Column width={3}>
                 <Segment>
                   <ProgramInfo
                     programId={programId}
@@ -197,14 +192,14 @@ class App extends Component {
                   />
                 </Segment>
               </Grid.Column>
-              <Grid.Column width={4}>
+              <Grid.Column width={6}>
                 <Segment>
-                <ComponentList
-                  testRunId={testRunId}
-                  selectedStepId={selectedStepId}
-                  handleComponentInfo={this.setComponentInfo}
-                  handleComponentSelect={this.setSelectedComponent}
-                />
+                  <ComponentList
+                    testRunId={testRunId}
+                    selectedStepId={selectedStepId}
+                    handleComponentInfo={this.setComponentInfo}
+                    handleComponentSelect={this.setSelectedComponent}
+                  />
                 </Segment>
               </Grid.Column>
               <Grid.Column width={3}>
@@ -218,7 +213,6 @@ class App extends Component {
               </Grid.Column>
             </Grid.Row>
           </Grid>
-        </Segment>
       </div>
     );
   }

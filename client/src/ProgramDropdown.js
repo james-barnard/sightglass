@@ -53,7 +53,6 @@ class ProgramDropdown extends Component {
 
     return(
       <div>
-        <h4>Programs</h4>
         {DropdownSearchSelection}
       </div>
     )
