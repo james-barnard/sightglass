@@ -1,47 +1,42 @@
-.App {
+#timelineSegment{
+  height: 5.75em;
+}
+
+#branding {
   text-align: center;
-  font-size: 10px;
-}
-
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
-}
-
-.App-header {
-  background-color: #222;
-  height: 35px;
-  color: white;
-}
-
-.App-title {
-  font-size: 1em;
-}
-
-.App-intro {
   font-size: large;
+  font-weight: bold;
+  background: #F0F0F0;
+  border-width: 1px;
+  border-color: rgba(0, 0, 0, 1);
+  box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.75);
+  border-radius: .5em;
 }
 
 h4 {
   font-size: small;
 }
 
+#machineSegment {
+  height: 38.8em;
+  width: 15.2em;
+
+}
+
 #machine_box {
   box-sizing: border-box;
   margin: auto;
+  align-content: center;
 }
 
 #machine {
-  width: 100%;
-  height: auto;
-}
-
-.valve {
-  width: 6.5%;
-  height: auto;
+  height: 37.5em;
+  width: auto;
 }
 
 .component {
+  height: 2.7%;
+  width: auto;
   opacity: .4 !important;
 }
 
@@ -51,90 +46,98 @@ h4 {
 #valve1 {
   visibility: visible;
   position: absolute;
-  left: 70.5%;
+  left: 70.7%;
   top: 88.2%;
 }
 
 #valve2 {
   visibility: visible;
   position: absolute;
-  left: 27.3%;
+  left: 26.6%;
   top: 83.3%;
-}
-
-#valve5 {
-  visibility: visible;
-  position: absolute;
-  left: 14.8%;
-  top: 45.2%;
-}
-
-#valve4 {
-  visibility: visible;
-  position: absolute;
-  left: 27.7%;
-  top: 52.1%;
 }
 
 #valve3 {
   visibility: visible;
   position: absolute;
-  left: 40.8%;
-  top: 58.5%;
+  left: 40%;
+  top: 58.2%;
+}
+
+#valve4 {
+  visibility: visible;
+  position: absolute;
+  left: 26.5%;
+  top: 51.8%;
+}
+
+#valve5 {
+  visibility: visible;
+  position: absolute;
+  left: 13%;
+  top: 44.8%;
 }
 
 #valve6 {
   visibility: visible;
   position: absolute;
-  left: 40.8%;
-  top: 34.9%;
+  left: 40%;
+  top: 34.5%;
 }
 
 #valve7 {
   visibility: visible;
   position: absolute;
-  left: 27.5%;
-  top: 25.1%;
-}
-
-#valve9 {
-  opacity: .6;
-  visibility: visible;
-  position: absolute;
-  left: 37.5%;
-  top: 43.7%;
-}
-
-#valve11 {
-  opacity: .6;
-  visibility: visible;
-  position: absolute;
-  left: 20.5%;
-  top: 48.4%;
-}
-
-#valve12 {
-  opacity: .6;
-  visibility: visible;
-  position: absolute;
-  left: 31.5%;
-  top: 28.5%;
+  left: 26.6%;
+  top: 24.5%;
 }
 
 #valve8 {
   opacity: .6;
   visibility: visible;
   position: absolute;
-  left: 23.8%;
-  top: 28.5%;
+  left: 22.4%;
+  top: 28%;
+}
+
+#valve9 {
+  opacity: .6;
+  visibility: visible;
+  position: absolute;
+  left: 37%;
+  top: 43.4%;
 }
 
 #valve10 {
   opacity: .6;
   visibility: visible;
   position: absolute;
-  left: 22.2%;
-  top: 54.5%;
+  left: 21%;
+  top: 54.2%;
+}
+
+#valve11 {
+  opacity: .6;
+  visibility: visible;
+  position: absolute;
+  left: 19.7%;
+  top: 48.2%;
+}
+
+#valve12 {
+  opacity: .6;
+  visibility: visible;
+  position: absolute;
+  left: 31%;
+  top: 28%;
+}
+
+#valve13 {
+  opacity: .6;
+  visibility: visible;
+  position: absolute;
+  left: 31%;
+  top: 54%;
 }
 
 #valve14 {
@@ -145,21 +148,13 @@ h4 {
   top: 91.3%;
 }
 
-#valve13 {
-  opacity: .6;
-  visibility: visible;
-  position: absolute;
-  left: 31.7%;
-  top: 54.5%;
-}
-
 #valve15 {
   visibility: visible;
   width: 10%;
   height: auto;
   position: absolute;
-  left: 29.8%;
-  top: 90.6%;
+  left: 29.4%;
+  top: 90.8%;
 }
 
 #valve16 {
@@ -167,6 +162,6 @@ h4 {
   width: 10%;
   height: auto;
   position: absolute;
-  left: 12.7%;
-  top: 90.6%;
+  left: 11.8%;
+  top: 90.8%;
 }

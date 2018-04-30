@@ -69,16 +69,16 @@ class Timeline extends Component {
       <Chart
         chartType='Timeline'
         columns={[
-          {type: 'string'},
-          {type: 'string'},
-          {type: 'number'},
-          {type: 'number'},
+          {type: 'string', id: 'testRunId'},
+          {type: 'string', id: 'label'},
+          {type: 'number', id: 'startTime'},
+          {type: 'number', id: 'endTime'},
           {role: 'tooltip', type: 'string'}
         ]}
         rows={this.state.steps}
         allowEmptyRows={true}
         width="100%"
-        height="5 em"
+        height="7em"
         chartPackages={['timeline']}
         chartEvents={[
           { eventName: 'select',

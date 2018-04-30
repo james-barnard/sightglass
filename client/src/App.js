@@ -119,7 +119,7 @@ class App extends Component {
 
   renderTestRunInfo() {
     return (
-      <Segment>
+      <Segment raised >
         <TestRunInfo
           testRunId={this.state.testRunId}
           tickCounter={this.state.tickCounter}
@@ -144,18 +144,24 @@ class App extends Component {
           <Grid>
             <Grid.Row>
               <Grid.Column>
-                <Timeline
-                  programId={programId}
-                  testRunId={testRunId}
-                  selectedStepId={selectedStepId}
-                  handleStepSelect={this.setStepInfo}
-                  tickCounter={this.state.tickCounter}
-                />
+                <Segment raised id='timelineSegment'>
+                  <Timeline
+                    programId={programId}
+                    testRunId={testRunId}
+                    selectedStepId={selectedStepId}
+                    handleStepSelect={this.setStepInfo}
+                    tickCounter={this.state.tickCounter}
+                  />
+                </Segment>
               </Grid.Column>
             </Grid.Row>
-            <Grid.Row centered stretched>
+            <Grid.Row centered>
+              <Grid.Column width={1} id="branding">
+                <p centered>N<br/>I<br/>T<br/>R<br/>O<br/>B<br/>R<br/>E<br/>W<br/> <br/>
+                S<br/>I<br/>G<br/>H<br/>T<br/>G<br/>L<br/>A<br/>S<br/>S<br/></p>
+              </Grid.Column>              
               <Grid.Column width={3}>
-                <Segment>
+                <Segment raised>
                     <ProgramDropdown 
                       handleProgramSelect={this.setProgram}
                       testRunId={testRunId}
@@ -177,14 +183,14 @@ class App extends Component {
                   {this.renderTestRunInfo()}
               </Grid.Column>
               <Grid.Column width={3}>
-                <Segment>
+                <Segment raised>
                   <ProgramInfo
                     programId={programId}
                     testRunId={testRunId}
                     tickCounter={this.state.tickCounter}
                   />
                 </Segment>
-                <Segment>
+                <Segment raised>
                   <StepInfo
                     selectedStepId={selectedStepId}
                     stepInfo={this.state.stepInfo}
@@ -193,7 +199,7 @@ class App extends Component {
                 </Segment>
               </Grid.Column>
               <Grid.Column width={6}>
-                <Segment>
+                <Segment raised>
                   <ComponentList
                     testRunId={testRunId}
                     selectedStepId={selectedStepId}
@@ -203,7 +209,7 @@ class App extends Component {
                 </Segment>
               </Grid.Column>
               <Grid.Column width={3}>
-                <Segment>
+                <Segment raised id='machineSegment'>
                   <GraphicWindow 
                     components={component_list_info}
                     selectedComponent={selectedComponent}
