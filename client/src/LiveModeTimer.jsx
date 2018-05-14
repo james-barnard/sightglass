@@ -29,6 +29,12 @@ class LiveModeTimer extends Component {
     clearInterval(this.refreshTimer);
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.reset && this.state.liveMode) {
+      this.handleClick();
+    }
+  }
+
   tick() {
     if (this.state.secondsLeft > 0) {
       this.setState((prevState) => ({

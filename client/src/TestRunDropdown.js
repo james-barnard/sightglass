@@ -22,7 +22,6 @@ class TestRunDropdown extends Component {
   testRunClicked = (e, { value }) => {
     var program_id = this.getProgramId(value);
     this.setState({value: value, filter: false});
-    console.log(`test run clicked: value:${value} program_id: ${program_id}`);
     (value) && this.props.handleTestRunSelect(value, ~~program_id);
   }
 
@@ -36,15 +35,12 @@ class TestRunDropdown extends Component {
   componentWillReceiveProps(nextProps) {
     if (nextProps.reset === true) {
       this.setState({value: null}, this.getInfo("test_runs"))
-      console.log(`TDD will receive props, not filtered`)
     }
     if (nextProps.filter === false) {
-      console.log('TDD component will receive props, but filter is false')
       return undefined
     }
     if (nextProps.filter === true && nextProps.programId !== this.props.programId)
       nextProps.programId && this.getInfo(`program_test_runs/${nextProps.programId}`)
-      console.log(`TDD will receive props, filtered on programid: ${nextProps.programId}, filter: ${nextProps.filter}`)
   }
 
   render() {

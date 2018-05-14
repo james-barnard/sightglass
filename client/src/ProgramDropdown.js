@@ -29,7 +29,6 @@ class ProgramDropdown extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.programId !== this.state.value) {
-      console.log(`PDD componentWillReceiveProps, nextProps.programId:${nextProps.programId}`);
       this.setState({value: nextProps.programId})
     }
     if (nextProps.reset === true) {
@@ -53,6 +52,7 @@ class ProgramDropdown extends Component {
 
     return(
       <div>
+        <h4>Program Select</h4>
         {DropdownSearchSelection}
       </div>
     )

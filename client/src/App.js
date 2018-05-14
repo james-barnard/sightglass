@@ -111,6 +111,7 @@ class App extends Component {
       <Menu.Item as={Button} disabled>
         <LiveModeTimer
           handleUpdateTick={this.UpdateTick}
+          reset={this.state.reset}
         />
       </Menu.Item>
     );
@@ -155,9 +156,9 @@ class App extends Component {
                 </Segment>
               </Grid.Column>
             </Grid.Row>
-            <Grid.Row centered>
+            <Grid.Row>
               <Grid.Column width={1} id="branding">
-                <p centered>N<br/>I<br/>T<br/>R<br/>O<br/>B<br/>R<br/>E<br/>W<br/> <br/>
+                <p>N<br/>I<br/>T<br/>R<br/>O<br/>B<br/>R<br/>E<br/>W<br/> <br/>
                 S<br/>I<br/>G<br/>H<br/>T<br/>G<br/>L<br/>A<br/>S<br/>S<br/></p>
               </Grid.Column>              
               <Grid.Column width={3}>

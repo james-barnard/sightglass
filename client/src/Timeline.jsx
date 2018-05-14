@@ -47,12 +47,16 @@ class Timeline extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (this.props.testRunId !== nextProps.testRunId || this.props.tickCounter !== nextProps.tickCounter) {
+    if (this.props.testRunId !== nextProps.testRunId) {
       nextProps.testRunId && this.getInfo(`timeline/${nextProps.testRunId}`);
       this.setState({steps: this.defaults, stepInfo: []},
         this.props.handleStepSelect(null, this.state.stepInfo)
       )
     }
+    if (this.props.tickCounter !== nextProps.tickCounter) {
+      nextProps.testRunId && this.getInfo(`timeline/${nextProps.testRunId}`);
+    }
+
     if (nextProps.programId && nextProps.testRunId === null) {
       this.getInfo(`program/timeline/${nextProps.programId}`)
     }
