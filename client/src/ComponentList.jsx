@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Client from './Client';
-import { Table } from 'semantic-ui-react'
+import { Table, Grid } from 'semantic-ui-react'
 import './App.css';
 
 class ComponentList extends Component {
@@ -37,8 +37,9 @@ class ComponentList extends Component {
   }
   
   handleClick = (e) => {
-    e.currentTarget.rowIndex && this.props.handleComponentSelect(e.currentTarget.rowIndex);
-    this.setState({ activeRow: e.currentTarget.rowIndex })
+    var tableRow = parseInt(e.currentTarget.firstElementChild.innerText)
+    tableRow && this.props.handleComponentSelect(tableRow);
+    this.setState({ activeRow: tableRow })
   }
 
   componentRows = (component) => {
@@ -50,7 +51,6 @@ class ComponentList extends Component {
         <Table.Cell>{component.id}</Table.Cell>
         <Table.Cell>{component.name}</Table.Cell>
         <Table.Cell>{component.state}</Table.Cell>
-        <Table.Cell>{component.step_id}</Table.Cell>
       </Table.Row>
     )
   };
@@ -58,20 +58,39 @@ class ComponentList extends Component {
   render() {
     return(
       <div>
-        <h4>Component List</h4>
-        <Table small selectable>
-          <Table.Header compact >
-            <Table.Row>
-              <Table.HeaderCell>ID</Table.HeaderCell>
-              <Table.HeaderCell>Name</Table.HeaderCell>
-              <Table.HeaderCell>Desired State</Table.HeaderCell>
-              <Table.HeaderCell>Step Id</Table.HeaderCell>
-            </Table.Row>
-          </Table.Header>
-          <Table.Body>
-            { this.state.components.map(component => this.componentRows(component)) }
-          </Table.Body>
-        </Table>
+        <h4>Components</h4>
+        <Grid columns="2">
+          <Grid.Row>
+          <Grid.Column>
+            <Table selectable fixed>
+              <Table.Header>
+                <Table.Row>
+                  <Table.HeaderCell>ID</Table.HeaderCell>
+                  <Table.HeaderCell>Name</Table.HeaderCell>
+                  <Table.HeaderCell>Desired State</Table.HeaderCell>
+                </Table.Row>
+              </Table.Header>
+              <Table.Body>
+                { this.state.components.filter(component => component.id <= 8).map(component => this.componentRows(component)) }
+              </Table.Body>
+            </Table>
+            </Grid.Column>
+            <Grid.Column>
+            <Table selectable>
+              <Table.Header>
+                <Table.Row>
+                  <Table.HeaderCell>ID</Table.HeaderCell>
+                  <Table.HeaderCell>Name</Table.HeaderCell>
+                  <Table.HeaderCell>Desired State</Table.HeaderCell>
+                </Table.Row>
+              </Table.Header>
+              <Table.Body>
+                { this.state.components.filter(component => component.id > 8).map(component => this.componentRows(component)) }
+              </Table.Body>
+            </Table>
+            </Grid.Column>
+          </Grid.Row>
+        </Grid>
       </div>
     );
   }

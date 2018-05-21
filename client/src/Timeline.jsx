@@ -47,12 +47,16 @@ class Timeline extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (this.props.testRunId !== nextProps.testRunId || this.props.tickCounter !== nextProps.tickCounter) {
+    if (this.props.testRunId !== nextProps.testRunId) {
       nextProps.testRunId && this.getInfo(`timeline/${nextProps.testRunId}`);
       this.setState({steps: this.defaults, stepInfo: []},
         this.props.handleStepSelect(null, this.state.stepInfo)
       )
     }
+    if (this.props.tickCounter !== nextProps.tickCounter) {
+      nextProps.testRunId && this.getInfo(`timeline/${nextProps.testRunId}`);
+    }
+
     if (nextProps.programId && nextProps.testRunId === null) {
       this.getInfo(`program/timeline/${nextProps.programId}`)
     }
@@ -69,16 +73,16 @@ class Timeline extends Component {
       <Chart
         chartType='Timeline'
         columns={[
-          {type: 'string'},
-          {type: 'string'},
-          {type: 'number'},
-          {type: 'number'},
+          {type: 'string', id: 'testRunId'},
+          {type: 'string', id: 'label'},
+          {type: 'number', id: 'startTime'},
+          {type: 'number', id: 'endTime'},
           {role: 'tooltip', type: 'string'}
         ]}
         rows={this.state.steps}
         allowEmptyRows={true}
         width="100%"
-        height="5 em"
+        height="7em"
         chartPackages={['timeline']}
         chartEvents={[
           { eventName: 'select',

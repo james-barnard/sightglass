@@ -10,17 +10,7 @@ PROGRAM_SELECT_LIST_KEYS = %w[id key text value]
   let(:sample_hash) { {"id" => 1, "key" => 1, "value" => 1, "text" => "sample text"} }
   let(:sample_text) { "1 | sample text" }
 
-  let(:program1_timeline) { [["1", "25: step description", 0, 1000, "1",
-                              {:duration=>"00:01", :description=>"step description",
-                               :status=>"", :pending_time=>"",
-                               :soaking_time=>"", :run_time=>"00:01"}
-                            ],
-                            ["1", "26: step description", 1000, 2000, "2",
-                              {:duration=>"00:01", :description=>"step description",
-                               :status=>"",:pending_time=>"", 
-                               :soaking_time=>"", :run_time=>"00:01"}
-                            ]]
-                         }
+  let(:timeline_keys) { [:pending_time, :soaking_time, :run_time, :duration, :description, :status] }
 
   let(:program1_program_info) {{ "program_time": "00:02", "step_count": 2, "program_purpose": "clean" }}
 
@@ -48,11 +38,33 @@ PROGRAM_SELECT_LIST_KEYS = %w[id key text value]
   end
 
   describe '#program_timeline' do
-    it 'returns an array of all the steps in the program' do
-      expect(Program.find(1).program_timeline).to eq(program1_timeline)
+    context 'starting at the beginning at the program' do
+      it 'returns an array with the correct data types' do
+        Program.find(1).program_timeline.each do |item|
+          expect(item[0]).to be_a_kind_of(String)
+          expect(item[1]).to be_a_kind_of(String)
+          expect(item[2]).to be_a_kind_of(Integer)
+          expect(item[3]).to be_a_kind_of(Integer)
+          expect(item[4]).to be_a_kind_of(String)
+          expect(item[5]).to be_a_kind_of(Hash)
+          expect(item[5].keys.sort).to eq(timeline_keys.sort)
+        end
+      end
     end
 
-    xit 'includes a step info object for each step'
+    context 'starting in the middle of the program' do
+      it 'returns an array with the correct data types' do
+        Program.find(1).program_timeline(31, 2).each do |item|
+          expect(item[0]).to be_a_kind_of(String)
+          expect(item[1]).to be_a_kind_of(String)
+          expect(item[2]).to be_a_kind_of(Integer)
+          expect(item[3]).to be_a_kind_of(Integer)
+          expect(item[4]).to be_a_kind_of(String)
+          expect(item[5]).to be_a_kind_of(Hash)
+          expect(item[5].keys.sort).to eq(timeline_keys.sort)
+        end
+      end
+    end
   end
 
   describe '#program_program_info' do

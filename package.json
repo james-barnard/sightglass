@@ -1,0 +1,29 @@
+{
+  "name": "sightglass",
+  "version": "1.0.0",
+  "description": "UI companion for Nitrobrew",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib",
+    "test": "test"
+  },
+  "dependencies": {
+    "gulp": "^3.9.1",
+    "require-dot-file": "^0.4.0",
+    "npm": "^6.0.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/james-barnard/sightglass.git"
+  },
+  "author": "Zac Barnard",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/james-barnard/sightglass/issues"
+  },
+  "homepage": "https://github.com/james-barnard/sightglass#readme"
+}

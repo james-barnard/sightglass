@@ -36,7 +36,7 @@ class TestRunInfo extends Component {
     const testRunInfo = (test_run) => {
       if (test_run !== undefined) {
         return(
-          <Table compact>
+          <Table compact fixed>
             <Table.Body>
               <Table.Row>
                 <Table.Cell textAlign='right'>Id:</Table.Cell>

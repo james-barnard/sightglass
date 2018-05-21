@@ -8,7 +8,6 @@ class StepInfo extends Component {
     return(
       <div>
         <h4>Step Info</h4>
-        <p>The Selected Step Id is: {selectedStepId}</p>
         <Table compact>
           <Table.Body>
             <Table.Row>
