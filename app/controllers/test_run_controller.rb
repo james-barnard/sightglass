@@ -27,6 +27,7 @@ class TestRunController < ApplicationController
     render json: combined_timeline
   end
 
+  private
   def check_status(test_run)
     status = test_run.step_statuses.last.status
     if status == "done"
