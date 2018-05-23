@@ -11,6 +11,10 @@ class StepInfo extends Component {
         <Table compact>
           <Table.Body>
             <Table.Row>
+              <Table.Cell textAlign='right'>Selected Step:</Table.Cell>
+              <Table.Cell>{selectedStepId}</Table.Cell>
+            </Table.Row>
+            <Table.Row>
               <Table.Cell textAlign='right'>Step Name</Table.Cell>
               <Table.Cell>{stepInfo.description}</Table.Cell>
             </Table.Row>

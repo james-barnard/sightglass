@@ -1,6 +1,6 @@
 import './App.css';
 import React, { Component } from 'react';
-import { Image, Container, Segment } from 'semantic-ui-react'
+import { Image, Container } from 'semantic-ui-react'
 import all_grey from './images/Skinny_Grey_with_pumps.png'
 import nc_closed from './images/NC_Closed2.png'
 import nc_open from './images/NC_Open.png'
@@ -8,9 +8,6 @@ import green_pump from './images/green_pump.png'
 import green_vacuum from './images/green_vacuum.png'
 
 class GraphicWindow extends Component {
-  constructor(props) {
-    super(props);
-  }
 
   componentWillReceiveProps(nextProps) {
     if (this.props.component_info !== nextProps.component_info) {

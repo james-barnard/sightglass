@@ -1,6 +1,6 @@
 import './App.css';
 import React, { Component } from 'react';
-import { Button, Grid, Segment, Menu, Container } from 'semantic-ui-react'
+import { Button, Grid, Segment, Menu } from 'semantic-ui-react'
 import TestRunInfo from './TestRunInfo.jsx'
 import ComponentList from './ComponentList.jsx'
 import ProgramInfo from './Program_Info.js'
@@ -39,10 +39,6 @@ class App extends Component {
         status: ""
       };
 
-  testValueChange = () => {
-    this.setState({programId: 100})
-  };
-
   setStepInfo = (step_id, step_info) => {
     this.setState({ selectedStepId: step_id, stepInfo: step_info })
   };
@@ -52,6 +48,7 @@ class App extends Component {
   };
 
   setTestRun = (value, program_id) => {
+    console.log(`App is setting test run to value:${value} program_id:${program_id}`);
     if (program_id === 0) {
        this.setState({testRunId: value, filter: false})
     } else {
@@ -60,6 +57,7 @@ class App extends Component {
   };
 
   setProgram = (value) => {
+    console.log(`App is setting program to ${value}`)
     this.setState({ 
       programId: value,
       testRunId: null,
@@ -130,8 +128,15 @@ class App extends Component {
     );
   }
 
+  shouldComponentUpdate(nextProps, nextState) {
+    const sameProgram = nextState.programId !== this.state.programId
+    const sameTestRun = nextState.testRunId !== this.state.testRunId
+    return sameProgram || sameTestRun;
+  }
+
 
   render() {
+    console.log('App render');
     const { programId,
             testRunId,
             selectedStepId,
@@ -149,7 +154,6 @@ class App extends Component {
                   <Timeline
                     programId={programId}
                     testRunId={testRunId}
-                    selectedStepId={selectedStepId}
                     handleStepSelect={this.setStepInfo}
                     tickCounter={this.state.tickCounter}
                   />

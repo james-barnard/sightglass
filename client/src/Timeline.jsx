@@ -16,9 +16,6 @@ class Timeline extends Component {
   defaults = [["Test Run ID", "Select a test run", 0, 3000, null ]];
 
   componentDidMount() {
-    this.setState({
-      render: true
-    })
   }
 
   getInfo = (resource) => {
@@ -46,6 +43,8 @@ class Timeline extends Component {
     }
   }
 
+  
+
   componentWillReceiveProps(nextProps) {
     if (this.props.testRunId !== nextProps.testRunId) {
       nextProps.testRunId && this.getInfo(`timeline/${nextProps.testRunId}`);
@@ -66,9 +65,8 @@ class Timeline extends Component {
   }
 
   render() {
-    if (!this.state.render)
-      return null;
     const that = this;
+    console.log('timeline render');
     return (
       <Chart
         chartType='Timeline'
