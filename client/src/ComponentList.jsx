@@ -32,12 +32,13 @@ class ComponentList extends Component {
       this.getComponentInfo(`step/${nextProps.selectedStepId}/component_states`, nextProps.selectedStepId)
     }
     if (this.props.testRunId !== nextProps.testRunId) {
+      console.log('component list received props');
       this.getComponentInfo('components/')
     }
   }
   
   handleClick = (e) => {
-    var tableRow = parseInt(e.currentTarget.firstElementChild.innerText)
+    var tableRow = parseInt(e.currentTarget.firstElementChild.innerText, 10)
     tableRow && this.props.handleComponentSelect(tableRow);
     this.setState({ activeRow: tableRow })
   }
@@ -56,6 +57,7 @@ class ComponentList extends Component {
   };
 
   render() {
+    console.log('ComponentList render');
     return(
       <div>
         <h4>Components</h4>
