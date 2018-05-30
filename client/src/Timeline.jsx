@@ -15,9 +15,6 @@ class Timeline extends Component {
 
   defaults = [["Test Run ID", "Select a test run", 0, 3000, null ]];
 
-  componentDidMount() {
-  }
-
   getInfo = (resource) => {
     Client.search(resource, (result) => {
       this.processArray(result);
@@ -25,27 +22,22 @@ class Timeline extends Component {
   }
 
   processArray = (steps) => {
+    console.log('process array');
+    console.log(steps);
     const step_info = steps.map(a => a.splice(5, 1)[0]);
-    this.setState( {steps: steps, stepInfo: step_info});
+    this.setState( {steps: steps, stepInfo: step_info} );
   }
 
   passStepInfo = (step_id, step_info) => {
     if (step_id) {
-      this.removeTooltip();
       this.props.handleStepSelect(step_id, step_info);
     };
   }
 
-  removeTooltip() {
-    var toolTips = document.getElementsByClassName("google-visualization-tooltip")
-    for(var i=0; i<=toolTips.length; i++) {
-      toolTips[i].remove()
-    }
-  }
-
-  
-
   componentWillReceiveProps(nextProps) {
+    console.log('componentWillReceiveProps');
+    console.log(this.props)
+    console.log(nextProps)
     if (this.props.testRunId !== nextProps.testRunId) {
       nextProps.testRunId && this.getInfo(`timeline/${nextProps.testRunId}`);
       this.setState({steps: this.defaults, stepInfo: []},
@@ -56,8 +48,8 @@ class Timeline extends Component {
       nextProps.testRunId && this.getInfo(`timeline/${nextProps.testRunId}`);
     }
 
-    if (nextProps.programId && nextProps.testRunId === null) {
-      this.getInfo(`program/timeline/${nextProps.programId}`)
+    if ((this.props.programId !== nextProps.programId) && (nextProps.testRunId === null)) {
+      this.props.programId && this.getInfo(`program/timeline/${nextProps.programId}`)
     }
     if (nextProps.programId === null) {
       this.setState({steps: this.defaults})
@@ -79,6 +71,10 @@ class Timeline extends Component {
         ]}
         rows={this.state.steps}
         allowEmptyRows={true}
+        options={{
+          timeline: {showRowLabels: false},
+          tooltip: {trigger: false}
+        }}
         width="100%"
         height="7em"
         chartPackages={['timeline']}
