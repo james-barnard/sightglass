@@ -23,13 +23,13 @@ class ProgramInfo extends Component {
   };
 
   componentWillReceiveProps(nextProps) {
-    if (this.props.testRunId !== nextProps.testRunId || this.props.tickCounter !== nextProps.tickCounter) {
+    if ((this.props.testRunId !== nextProps.testRunId) || (this.props.tickCounter !== nextProps.tickCounter)) {
       nextProps.testRunId && this.getInfo(`program_info/${nextProps.testRunId}`)
     }
     if (nextProps.programId && nextProps.testRunId === null) {
       this.getInfo(`program_program_info/${nextProps.programId}`)
     }
-    if (nextProps.testRunId === null) {
+    if ((nextProps.testRunId === null) && (nextProps.programId === null)) {
       this.setState({
         program_info: "---",
         run_time: "---",

@@ -1,6 +1,7 @@
 import './App.css';
 import React, { Component } from 'react';
 import { Button, Grid, Segment, Menu } from 'semantic-ui-react'
+import Client from './Client';
 import TestRunInfo from './TestRunInfo.jsx'
 import ComponentList from './ComponentList.jsx'
 import ProgramInfo from './Program_Info.js'
@@ -19,9 +20,9 @@ class App extends Component {
     this.state = {
       testRunId: null,
       programId: null,
-      selectedStepId: null,
+      steps: null,
+      selectedStepIndex: null,
       selectedComponent: null,
-      stepInfo: this.stepInfoDefault,
       component_list_info: [],
       tickCounter: 0,
       reset: false,
@@ -30,42 +31,72 @@ class App extends Component {
     }
   };
 
-  stepInfoDefault = {
-        pending_time: "",
-        soaking_time: "",
-        run_time: "",
-        duration: "",
-        description: "",
-        status: ""
-      };
+  getTimeline = (resource) => {
+    Client.search(resource, (result) => {
+      this.setState( {steps: result} )
+    });
+  }
 
-  setStepInfo = (step_id, step_info) => {
-    this.setState({ selectedStepId: step_id, stepInfo: step_info })
-  };
+  setSelectedStep = stepsIndex => {
+    this.setState( {selectedStepIndex: stepsIndex })
+  }
+
+  incrementStep = () => {
+    this.setState((prevState) => {
+      var maxIndex = prevState.steps.length - 1
+      var checkIndex = prevState.selectedStepIndex + 1
+      var newIndex = checkIndex <= maxIndex ? checkIndex : maxIndex
+      return { selectedStepIndex: newIndex }
+    })
+  }
+
+  decrementStep = () => {
+    this.setState((prevState) => {
+      var checkIndex = prevState.selectedStepIndex - 1
+      var newIndex = checkIndex >= 0 ? checkIndex : 0
+      return { selectedStepIndex: newIndex }
+    })
+  }
+
+  getStepInfo = () => {
+    if (this.state.steps && (this.state.selectedStepIndex !== null)) {
+      return this.state.steps[this.state.selectedStepIndex][5]
+    } else {
+      return null
+    }
+  }
+
+  getStepId = () => {
+    if (this.state.steps && (this.state.selectedStepIndex !== null)) {
+      return this.state.steps[this.state.selectedStepIndex][4]
+    } else {
+      return null
+    }
+  }
 
   setComponentInfo = (component_info) => {
     this.setState({ component_list_info: component_info})
-  };
+  }
 
   setTestRun = (value, program_id) => {
-    console.log(`App is setting test run to value:${value} program_id:${program_id}`);
+    this.getTimeline(`timeline/${value}`);
     if (program_id === 0) {
-       this.setState({testRunId: value, filter: false})
+      this.setState({testRunId: value, filter: false});
     } else {
       this.setState({testRunId: value, programId: program_id, filter: false})
     }
-  };
+  }
 
   setProgram = (value) => {
-    console.log(`App is setting program to ${value}`)
+    this.getTimeline(`program/timeline/${value}`);
     this.setState({ 
       programId: value,
       testRunId: null,
       selectedComponent: null,
-      selectedStepId: null,
+      selectedStepIndex: null,
       filter: true
     })
-  };
+  }
 
   setSelectedComponent = (rowIndex) => {
     this.setState({ selectedComponent: rowIndex })
@@ -76,6 +107,7 @@ class App extends Component {
   }
 
   UpdateTick = (counter) => {
+    this.getTimeline(`timeline/${this.state.testRunId}`);
     this.setState({ tickCounter: counter })
   }
 
@@ -83,14 +115,15 @@ class App extends Component {
     this.setState({
       testRunId: null,
       programId: null,
-      selectedStepId: null,
+      selectedStepIndex: null,
       selectedComponent: null,
       stepInfo: this.stepInfoDefault,
       component_list_info: [],
       tickCounter: 0,
       reset: true,
       filter: false,
-      finalStatus: null
+      finalStatus: null,
+      steps: null
     }, () => this.setState({reset: false})
     )
   }
@@ -128,23 +161,18 @@ class App extends Component {
     );
   }
 
-  shouldComponentUpdate(nextProps, nextState) {
-    const sameProgram = nextState.programId !== this.state.programId
-    const sameTestRun = nextState.testRunId !== this.state.testRunId
-    return sameProgram || sameTestRun;
-  }
-
-
   render() {
-    console.log('App render');
     const { programId,
             testRunId,
-            selectedStepId,
+            steps,
+            selectedStepIndex,
             component_list_info,
             selectedComponent,
             reset,
             filter
           } = this.state;
+    var selectedStepId = this.getStepId()
+    var stepInfo = this.getStepInfo()
     return (
       <div className="App">
           <Grid>
@@ -152,10 +180,9 @@ class App extends Component {
               <Grid.Column>
                 <Segment raised id='timelineSegment'>
                   <Timeline
-                    programId={programId}
-                    testRunId={testRunId}
-                    handleStepSelect={this.setStepInfo}
-                    tickCounter={this.state.tickCounter}
+                    steps={this.state.steps}
+                    handleStepSelect={this.setSelectedStep}
+                    selectedStepId={selectedStepId}
                   />
                 </Segment>
               </Grid.Column>
@@ -189,16 +216,18 @@ class App extends Component {
               </Grid.Column>
               <Grid.Column width={3}>
                 <Segment raised>
-                  <ProgramInfo
-                    programId={programId}
-                    testRunId={testRunId}
+                  <StepInfo
+                    previousStepHandler={this.decrementStep}
+                    nextStepHandler={this.incrementStep}
+                    selectedStepId={selectedStepId}
+                    stepInfo={stepInfo}
                     tickCounter={this.state.tickCounter}
                   />
                 </Segment>
                 <Segment raised>
-                  <StepInfo
-                    selectedStepId={selectedStepId}
-                    stepInfo={this.state.stepInfo}
+                  <ProgramInfo
+                    programId={programId}
+                    testRunId={testRunId}
                     tickCounter={this.state.tickCounter}
                   />
                 </Segment>
