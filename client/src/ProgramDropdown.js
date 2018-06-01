@@ -21,7 +21,6 @@ class ProgramDropdown extends Component {
   };
 
   programClicked = (e, { value }) => {
-    console.log(`PDD programClicked, value:${value}`);
     (value) && this.setState( {value: value},
       () => this.props.handleProgramSelect(value),
     )
