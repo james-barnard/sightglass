@@ -101,6 +101,7 @@ class App extends Component {
       <Menu.Item as={Button}>
         <LiveModeTimer
           handleUpdateTick={this.UpdateTick}
+          reset={this.state.reset}
         />
       </Menu.Item>
     );
