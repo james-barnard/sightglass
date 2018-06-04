@@ -74,6 +74,14 @@ class App extends Component {
     }
   }
 
+  getSequenceNumber = () => {
+    if (this.state.steps && (this.state.selectedStepIndex !== null)) {
+      return this.state.steps[this.state.selectedStepIndex][6]
+    } else {
+      return null
+    }
+  }
+
   setComponentInfo = (component_info) => {
     this.setState({ component_list_info: component_info})
   }
@@ -173,6 +181,7 @@ class App extends Component {
             filter
           } = this.state;
     var selectedStepId = this.getStepId()
+    var sequenceNumber = this.getSequenceNumber()
     var stepInfo = this.getStepInfo()
     return (
       <div className="App">
@@ -220,7 +229,7 @@ class App extends Component {
                   <StepInfo
                     previousStepHandler={this.decrementStep}
                     nextStepHandler={this.incrementStep}
-                    selectedStepId={selectedStepId}
+                    sequenceNumber={sequenceNumber}
                     stepInfo={stepInfo}
                     tickCounter={this.state.tickCounter}
                   />

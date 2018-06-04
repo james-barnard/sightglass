@@ -14,7 +14,7 @@ class StepInfo extends Component {
 
   render() {
     const stepInfo = this.props.stepInfo ? this.props.stepInfo : this.stepInfoDefault
-    const { selectedStepId } = this.props
+    const { sequenceNumber } = this.props
     return(
       <div>
         <h4>Step Info</h4>
@@ -30,7 +30,7 @@ class StepInfo extends Component {
           <Table.Body>
             <Table.Row>
               <Table.Cell textAlign='right'>Selected Step:</Table.Cell>
-              <Table.Cell>{selectedStepId}</Table.Cell>
+              <Table.Cell>{sequenceNumber}</Table.Cell>
             </Table.Row>
             <Table.Row>
               <Table.Cell textAlign='right'>Step Name</Table.Cell>

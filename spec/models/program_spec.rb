@@ -48,6 +48,7 @@ PROGRAM_SELECT_LIST_KEYS = %w[id key text value]
           expect(item[4]).to be_a_kind_of(String)
           expect(item[5]).to be_a_kind_of(Hash)
           expect(item[5].keys.sort).to eq(timeline_keys.sort)
+          expect(item[6]).to be_a_kind_of(Integer)
         end
       end
     end
@@ -62,6 +63,7 @@ PROGRAM_SELECT_LIST_KEYS = %w[id key text value]
           expect(item[4]).to be_a_kind_of(String)
           expect(item[5]).to be_a_kind_of(Hash)
           expect(item[5].keys.sort).to eq(timeline_keys.sort)
+          expect(item[6]).to be_a_kind_of(Integer)
         end
       end
     end

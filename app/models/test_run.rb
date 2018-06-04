@@ -28,7 +28,6 @@ class TestRun < ApplicationRecord
   end
 
   def test_run_info
-    # todo is this necessary?  start_string = started_at
     {
       test_run_id: id,
       program_id: program.id,
@@ -56,7 +55,8 @@ class TestRun < ApplicationRecord
       (step_status.first.started_at - start_time)*1000,
       (step_status.last.started_at - start_time)*1000,
       step_status.first.step_id.to_s,
-      build_step_info(step_status)
+      build_step_info(step_status),
+      sequence_number
     ]
   end
 

@@ -47,7 +47,8 @@ class Program < ApplicationRecord
       step_start_time * 1000,
       (step_start_time + step.duration) * 1000,
       step.id.to_s,
-      build_program_step_info(step)
+      build_program_step_info(step),
+      step.sequence_number
     ]
   end
 

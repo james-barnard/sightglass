@@ -28,10 +28,6 @@ class TestRunInfo extends Component {
     }
   }
 
-  componentDidMount() {
-    this.props.testRunId && this.getInfo(`test_run/${this.props.testRunId}`);
-  }
-
   render() {
     const testRunInfo = (test_run) => {
       if (test_run !== undefined) {
