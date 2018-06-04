@@ -34,7 +34,8 @@ class TestRun < ApplicationRecord
       purpose: program.purpose,
       started_at: Time.at(started_at).strftime("%B %e, %Y, %I:%M %p"),
       completed_at: completed_at_time,
-      status_final: status
+      status_final: status,
+      step_final: last_step_attempted
     }
   end
 
@@ -116,4 +117,8 @@ class TestRun < ApplicationRecord
     end
   end
 
+  def last_step_attempted
+    return "" unless step_statuses.count > 0
+    step_statuses.order(:id).last.step.sequence_number
+  end
 end

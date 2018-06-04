@@ -8,6 +8,8 @@ RSpec.describe TestRun, type: :model do
   let(:test_run1) { TestRun.find 1 }
   let(:elapsed_time) { 30 }
   let(:timeline_keys) { [:pending_time, :soaking_time, :run_time, :duration, :description, :status] }
+  let(:test_run_info_keys) { [:test_run_id, :program_id, :purpose, :started_at, :completed_at, :status_final, :step_final] }
+
 
   it "knows how long the program took to run" do
     expect(test_run1.run_time).to eq(elapsed_time)
@@ -44,6 +46,7 @@ RSpec.describe TestRun, type: :model do
         end
       end 
     end
+  end
 
   describe '#test_run_select_list' do
     it 'gets a list of all the test runs with a given program id from the database' do
@@ -58,5 +61,10 @@ RSpec.describe TestRun, type: :model do
       expect(TestRun.program_test_run_select_list(3).to_a.count).to eq(1)
     end
   end
-end
+
+  describe '#test_run_info' do
+    it 'has the correct keys' do
+      expect(test_run1.test_run_info.keys.sort).to eq(test_run_info_keys.sort)
+    end
+  end
 end
