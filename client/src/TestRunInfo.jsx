@@ -58,6 +58,10 @@ class TestRunInfo extends Component {
                 <Table.Cell textAlign='right'>Final Status:</Table.Cell>
                 <Table.Cell>{test_run.status_final}</Table.Cell>
               </Table.Row>
+              <Table.Row>
+                <Table.Cell textAlign='right'>Final Step:</Table.Cell>
+                <Table.Cell>{test_run.step_final}</Table.Cell>
+              </Table.Row>
             </Table.Body>
           </Table>
 
