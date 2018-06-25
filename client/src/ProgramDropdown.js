@@ -1,6 +1,6 @@
-import React, { Component } from 'react'
-import Client from './Client';
-import { Dropdown } from 'semantic-ui-react'
+import React, { Component } from "react";
+import Client from "./Client";
+import { Dropdown } from "semantic-ui-react";
 
 class ProgramDropdown extends Component {
   constructor(props) {
@@ -10,10 +10,10 @@ class ProgramDropdown extends Component {
       value: null
     };
     this.getInfo("programs");
-  };
+  }
 
-  getInfo = (resource) => {
-    Client.search(resource, (result) => {
+  getInfo = resource => {
+    Client.search(resource, result => {
       this.setState({
         programs: result
       });
@@ -21,25 +21,26 @@ class ProgramDropdown extends Component {
   };
 
   programClicked = (e, { value }) => {
-    (value) && this.setState( {value: value},
-      () => this.props.handleProgramSelect(value),
-    )
-  }
+    value &&
+      this.setState({ value: value }, () =>
+        this.props.handleProgramSelect(value)
+      );
+  };
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.programId !== this.state.value) {
-      this.setState({value: nextProps.programId})
+      this.setState({ value: nextProps.programId });
     }
     if (nextProps.reset === true) {
-      this.setState({value: null})
+      this.setState({ value: null });
     }
   }
 
   render() {
-    const { programs, value } = this.state
+    const { programs, value } = this.state;
     const DropdownSearchSelection = (
-      <Dropdown 
-        placeholder='Select Program'
+      <Dropdown
+        placeholder="Select Program"
         fluid
         search
         selection
@@ -47,14 +48,14 @@ class ProgramDropdown extends Component {
         onChange={this.programClicked}
         value={value}
       />
-    )
+    );
 
-    return(
+    return (
       <div>
         <h4>Program Select</h4>
         {DropdownSearchSelection}
       </div>
-    )
+    );
   }
 }
-export default ProgramDropdown
+export default ProgramDropdown;
